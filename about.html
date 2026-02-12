@@ -226,6 +226,54 @@
           </div>
         </section>
 
+        <!-- RGPD Section -->
+        <section class="about-section">
+          <div class="card card-featured" style="background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); border-color: #3b82f6;">
+            <div style="display: flex; align-items: flex-start; gap: 1.5rem;">
+              <div style="background: #3b82f6; color: white; width: 64px; height: 64px; border-radius: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="width: 32px; height: 32px;">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
+                </svg>
+              </div>
+              <div>
+                <h3 style="color: #1e40af; margin-bottom: var(--space-3); font-size: var(--text-h4);" data-i18n="aboutRGPDTitle">Conforme au RGPD</h3>
+                <p style="color: #1e40af; margin-bottom: var(--space-4); line-height: var(--leading-relaxed);" data-i18n="aboutRGPDDesc">
+                  Votre vie privée est notre priorité. Invoice Factory ne collecte aucune donnée personnelle 
+                  et stocke toutes vos informations exclusivement sur votre appareil.
+                </p>
+                <div style="display: flex; flex-wrap: wrap; gap: var(--space-3);">
+                  <div style="display: flex; align-items: center; gap: 0.5rem; color: #1e40af; font-size: var(--text-sm);">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="width: 16px; height: 16px;">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <span data-i18n="aboutRGPDPoint1">Aucune donnée personnelle collectée</span>
+                  </div>
+                  <div style="display: flex; align-items: center; gap: 0.5rem; color: #1e40af; font-size: var(--text-sm);">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="width: 16px; height: 16px;">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <span data-i18n="aboutRGPDPoint2">Stockage 100% local</span>
+                  </div>
+                  <div style="display: flex; align-items: center; gap: 0.5rem; color: #1e40af; font-size: var(--text-sm);">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="width: 16px; height: 16px;">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <span data-i18n="aboutRGPDPoint3">Pas de cookies de tracking</span>
+                  </div>
+                </div>
+                <div style="margin-top: var(--space-4);">
+                  <a href="privacy.html" class="btn btn-primary" style="background: #3b82f6; border-color: #3b82f6;">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width: 1.25rem; height: 1.25rem;">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+                    </svg>
+                    <span data-i18n="aboutRGPDButton">En savoir plus</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <!-- Stats Section -->
         <section class="about-section">
           <div class="card card-featured">
@@ -267,6 +315,13 @@
     <footer class="app-footer">
       <div class="app-container">
         <div class="footer-content">
+          <div class="footer-links" style="margin-bottom: var(--space-4);">
+            <a href="about.html" data-i18n="footerAbout">À propos</a>
+            <span style="color: var(--color-text-tertiary);">•</span>
+            <a href="privacy.html" data-i18n="footerPrivacy">Confidentialité</a>
+            <span style="color: var(--color-text-tertiary);">•</span>
+            <a href="LICENSE" target="_blank" data-i18n="footerLicense">Licence</a>
+          </div>
           <div class="footer-creator">
             <p class="footer-creator-text"><span data-i18n="footerMadeWith">Conçu avec</span> <span class="footer-creator-heart">❤️</span> <span data-i18n="footerBy">par</span></p>
             <img src="assets/icons/Logo-Mr-Nerd-black.png" alt="Monsieur Nerd" class="footer-creator-logo">

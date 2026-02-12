@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+<head>
+  <!-- Theme initialization - must be first to prevent flash -->
+  <script>
+    (function() {
+      const savedTheme = localStorage.getItem('monsieurnerd-theme');
+      
+      // Fonction pour obtenir le thème effectif
+      function getEffectiveTheme(preference) {
+        if (preference === 'auto' || !preference) {
+          return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        return preference;
+      }
+      
+      // Appliquer le thème immédiatement
+      const effectiveTheme = getEffectiveTheme(savedTheme);
+      document.documentElement.setAttribute('data-theme', effectiveTheme);
+    })();
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Politique de confidentialité - Invoice Factory</title>
+  <meta name="description" content="Politique de confidentialité et protection des données personnelles - Invoice Factory">
+  
+  <link rel="icon" href="assets/logo-invoice-factory-32.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/logo-invoice-factory.svg">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#15803D">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="css/monsieurnerd-design-system.css?v=7">
+  <link rel="stylesheet" href="css/monsieurnerd-components.css?v=7">
+  <link rel="stylesheet" href="css/monsieurnerd-app.css?v=7">
+</head>
+<body>
+  <div class="app-root">
+    <!-- HEADER -->
+    <header class="app-header">
+      <div class="app-container">
+        <div class="header-inner">
+          <a href="index.html" class="header-logo">
+            <img src="assets/logo-invoice-factory.svg" alt="Invoice Factory">
+            <span class="header-logo-text">Invoice Factory</span>
+          </a>
+          
+          <nav class="header-nav">
+            <a href="index.html" class="nav-link">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
+              <span data-i18n="navCreate">Créer</span>
+            </a>
+            <a href="history.html" class="nav-link">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>
+              <span data-i18n="navHistory">Historique</span>
+            </a>
+            <a href="settings.html" class="nav-link">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 0 1 1.37.49l1.296 2.247a1.125 1.125 0 0 1-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 0 1 0 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 0 1-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 0 1-.22.128c-.331.183-.581.495-.644.869l-.212 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 0 1-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 0 1-1.369-.49l-1.297-2.247a1.125 1.125 0 0 1 .26-1.431l1.004-.827c.292-.24.437-.613.43-.992a6.932 6.932 0 0 1 0-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 0 1-.26-1.43l1.297-2.247a1.125 1.125 0 0 1 1.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.281Z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" /></svg>
+              <span data-i18n="navSettings">Paramètres</span>
+            </a>
+            <a href="about.html" class="nav-link">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" /></svg>
+              <span data-i18n="navAbout">À propos</span>
+            </a>
+          </nav>
+          
+          <div class="header-actions">
+            <button class="theme-toggle" data-action="toggle-theme" data-i18n-aria-label="themeToggle" aria-label="Changer de thème">
+              <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z" /></svg>
+              <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z" /></svg>
+            </button>
+            
+            <div class="dropdown lang-selector">
+              <button class="lang-selector-btn" data-dropdown-toggle="lang-menu" aria-expanded="false">
+                <img src="assets/icons/flag-fr.svg" alt="" class="lang-flag" id="current-lang-flag">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="width:1rem;height:1rem;"><path stroke-linecap="round" stroke-linejoin="round" d="m19 9-7 7-7-7" /></svg>
+              </button>
+              <div class="dropdown-menu" id="lang-menu">
+                <div class="dropdown-item" data-action="set-lang" data-lang="fr">
+                  <img src="assets/icons/flag-fr.svg" alt="" class="lang-flag">
+                  <span data-i18n="langFr">Français</span>
+                </div>
+                <div class="dropdown-item" data-action="set-lang" data-lang="nl">
+                  <img src="assets/icons/flag-nl.svg" alt="" class="lang-flag">
+                  <span data-i18n="langNl">Nederlands</span>
+                </div>
+                <div class="dropdown-item" data-action="set-lang" data-lang="de">
+                  <img src="assets/icons/flag-de.svg" alt="" class="lang-flag">
+                  <span data-i18n="langDe">Deutsch</span>
+                </div>
+                <div class="dropdown-item" data-action="set-lang" data-lang="en">
+                  <img src="assets/icons/flag-en.svg" alt="" class="lang-flag">
+                  <span data-i18n="langEn">English</span>
+                </div>
+              </div>
+            </div>
+            
+            <button class="mobile-menu-toggle" data-action="toggle-mobile-menu" aria-label="Menu" aria-expanded="false">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" /></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+    
+    <div class="mobile-menu" id="mobile-menu">
+      <nav class="mobile-nav">
+        <a href="index.html" class="nav-link" data-i18n="navCreate">Créer</a>
+        <a href="history.html" class="nav-link" data-i18n="navHistory">Historique</a>
+        <a href="settings.html" class="nav-link" data-i18n="navSettings">Paramètres</a>
+        <a href="about.html" class="nav-link" data-i18n="navAbout">À propos</a>
+      </nav>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <main class="app-main">
+      <!-- PAGE HEADER -->
+      <div class="page-header">
+        <div class="app-container">
+          <h1 class="page-title" data-i18n="privacyTitle">Politique de confidentialité</h1>
+          <p class="page-description" data-i18n="privacyDesc">Votre vie privée est notre priorité. Découvrez comment nous protégeons vos données.</p>
+        </div>
+      </div>
+
+      <div class="app-container">
+        <!-- Introduction -->
+        <section class="about-section">
+          <div class="card card-featured" style="background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%); border-color: #10b981;">
+            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+              <div style="background: #10b981; color: white; width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="width: 24px; height: 24px;">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
+                </svg>
+              </div>
+              <h2 style="margin: 0; color: #065f46;" data-i18n="privacyPromiseTitle">Notre engagement</h2>
+            </div>
+            <p style="color: #047857; margin: 0;" data-i18n="privacyPromiseText">
+              Invoice Factory respecte votre vie privée. Nous ne collectons aucune donnée personnelle. 
+              Toutes vos factures et préférences restent exclusivement sur votre appareil.
+            </p>
+          </div>
+        </section>
+
+        <!-- Données collectées -->
+        <section class="about-section">
+          <h2 class="section-title" data-i18n="privacyDataTitle">Données collectées</h2>
+          <div class="about-grid">
+            <div class="about-card">
+              <div class="about-card-icon" style="background: #dbeafe;">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="color: #2563eb;"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z" /></svg>
+              </div>
+              <h3 class="about-card-title" data-i18n="privacyNoneTitle">Aucune donnée personnelle</h3>
+              <p class="about-card-text" data-i18n="privacyNoneText">
+                Nous ne collectons aucune information personnelle identifiable. 
+                Pas d'email, pas de nom, pas de numéro de téléphone.
+              </p>
+            </div>
+            
+            <div class="about-card">
+              <div class="about-card-icon" style="background: #fef3c7;">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="color: #d97706;"><path stroke-linecap="round" stroke-linejoin="round" d="M20.25 6.375c0 2.278-3.694 4.125-8.25 4.125S3.75 8.653 3.75 6.375m16.5 0c0-2.278-3.694-4.125-8.25-4.125S3.75 4.097 3.75 6.375m16.5 0v11.25c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125V6.375m16.5 0v3.75m-16.5-3.75v3.75m16.5 0v3.75C20.25 16.153 16.556 18 12 18s-8.25-1.847-8.25-4.125v-3.75m16.5 0c0 2.278-3.694 4.125-8.25 4.125s-8.25-1.847-8.25-4.125" /></svg>
+              </div>
+              <h3 class="about-card-title" data-i18n="privacyLocalTitle">Stockage 100% local</h3>
+              <p class="about-card-text" data-i18n="privacyLocalText">
+                Vos factures et préférences sont stockées uniquement dans le localStorage 
+                de votre navigateur, sur votre appareil uniquement.
+              </p>
+            </div>
+            
+            <div class="about-card">
+              <div class="about-card-icon" style="background: #e0e7ff;">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="color: #4f46e5;"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 01-.659 1.591l-5.432 5.432a2.25 2.25 0 00-.659 1.591v2.927a2.25 2.25 0 01-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 00-.659-1.591L3.659 7.409A2.25 2.25 0 013 5.818V4.774c0-.54.384-1.006.917-1.096A48.324 48.324 0 0112 3z" /></svg>
+              </div>
+              <h3 class="about-card-title" data-i18n="privacyNoServerTitle">Pas de serveur</h3>
+              <p class="about-card-text" data-i18n="privacyNoServerText">
+                Notre application n'a pas de backend. Aucune donnée n'est transmise 
+                à des serveurs distants.
+              </p>
+            </div>
+            
+            <div class="about-card">
+              <div class="about-card-icon" style="background: #fce7f3;">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="color: #db2777;"><path stroke-linecap="round" stroke-linejoin="round" d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 10-4.243-4.243m4.242 4.242L9.88 9.88" /></svg>
+              </div>
+              <h3 class="about-card-title" data-i18n="privacyNoTrackTitle">Pas de tracking</h3>
+              <p class="about-card-text" data-i18n="privacyNoTrackText">
+                Nous n'utilisons aucun cookie de tracking, ni Google Analytics, 
+                ni aucun outil d'analyse tierce.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Détails techniques -->
+        <section class="about-section">
+          <h2 class="section-title" data-i18n="privacyTechTitle">Détails techniques</h2>
+          <div class="card card-flat">
+            <div style="padding: var(--space-6);">
+              <h3 style="color: var(--color-text-primary); margin-bottom: var(--space-4);" data-i18n="privacyStorageTitle">Stockage local (localStorage)</h3>
+              <p style="color: var(--color-text-secondary); margin-bottom: var(--space-4);" data-i18n="privacyStorageDesc">
+                Nous utilisons le localStorage du navigateur pour sauvegarder :
+              </p>
+              <ul style="color: var(--color-text-secondary); padding-left: var(--space-6); margin-bottom: var(--space-4);">
+                <li data-i18n="privacyStorage1">Vos préférences (thème, langue)</li>
+                <li data-i18n="privacyStorage2">Votre historique de factures (limité à 20 éléments)</li>
+                <li data-i18n="privacyStorage3">L'état d'installation de l'application (PWA)</li>
+              </ul>
+              <p style="color: var(--color-text-secondary);" data-i18n="privacyStorageNote">
+                Ces données ne quittent jamais votre appareil et sont entièrement sous votre contrôle.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Vos droits -->
+        <section class="about-section">
+          <h2 class="section-title" data-i18n="privacyRightsTitle">Vos droits</h2>
+          <div class="about-grid">
+            <div class="card card-flat">
+              <div style="padding: var(--space-6);">
+                <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: var(--space-3);">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width: 24px; height: 24px; color: var(--color-primary);">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0M12 12.75h.008v.008H12v-.008z" />
+                  </svg>
+                  <h4 style="margin: 0;" data-i18n="privacyRightDeleteTitle">Droit à l'effacement</h4>
+                </div>
+                <p style="color: var(--color-text-secondary); margin: 0;" data-i18n="privacyRightDeleteText">
+                  Vous pouvez supprimer votre historique à tout moment depuis la page Historique 
+                  ou en vidant le localStorage de votre navigateur.
+                </p>
+              </div>
+            </div>
+            
+            <div class="card card-flat">
+              <div style="padding: var(--space-6);">
+                <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: var(--space-3);">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width: 24px; height: 24px; color: var(--color-primary);">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
+                  </svg>
+                  <h4 style="margin: 0;" data-i18n="privacyRightAccessTitle">Droit d'accès</h4>
+                </div>
+                <p style="color: var(--color-text-secondary); margin: 0;" data-i18n="privacyRightAccessText">
+                  Toutes vos données sont visibles directement dans l'application. 
+                  Vous pouvez exporter vos factures en JSON à tout moment.
+                </p>
+              </div>
+            </div>
+            
+            <div class="card card-flat">
+              <div style="padding: var(--space-6);">
+                <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: var(--space-3);">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width: 24px; height: 24px; color: var(--color-primary);">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
+                  </svg>
+                  <h4 style="margin: 0;" data-i18n="privacyRightPortabilityTitle">Droit à la portabilité</h4>
+                </div>
+                <p style="color: var(--color-text-secondary); margin: 0;" data-i18n="privacyRightPortabilityText">
+                  Exportez vos factures en format JSON ou PDF et emportez-les où vous voulez.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Contact -->
+        <section class="about-section" style="text-align: center; max-width: 600px; margin: 0 auto;">
+          <h2 style="font-family: var(--font-display); font-size: var(--text-h4); margin-bottom: var(--space-4);" data-i18n="privacyContactTitle">Contact</h2>
+          <p style="color: var(--color-text-secondary); line-height: var(--leading-relaxed); margin-bottom: var(--space-6);" data-i18n="privacyContactText">
+            Pour toute question concernant la protection de vos données, vous pouvez nous contacter :
+          </p>
+          <a href="mailto:dev@monsieurnerd.com" class="btn btn-primary">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width: 1.25rem; height: 1.25rem;">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+            </svg>
+            dev@monsieurnerd.com
+          </a>
+        </section>
+
+        <!-- Mise à jour -->
+        <section style="text-align: center; padding-top: var(--space-8); border-top: 1px solid var(--color-border);">
+          <p style="color: var(--color-text-tertiary); font-size: var(--text-sm);" data-i18n="privacyUpdate">
+            Dernière mise à jour : 12 février 2026
+          </p>
+        </section>
+      </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="app-footer">
+      <div class="app-container">
+        <div class="footer-content">
+          <div class="footer-links" style="margin-bottom: var(--space-4);">
+            <a href="about.html" data-i18n="footerAbout">À propos</a>
+            <span style="color: var(--color-text-tertiary);">•</span>
+            <a href="privacy.html" data-i18n="footerPrivacy">Confidentialité</a>
+            <span style="color: var(--color-text-tertiary);">•</span>
+            <a href="LICENSE" target="_blank" data-i18n="footerLicense">Licence</a>
+          </div>
+          <div class="footer-creator">
+            <p class="footer-creator-text"><span data-i18n="footerMadeWith">Conçu avec</span> <span class="footer-creator-heart">❤️</span> <span data-i18n="footerBy">par</span></p>
+            <img src="assets/icons/Logo-Mr-Nerd-black.png" alt="Monsieur Nerd" class="footer-creator-logo">
+          </div>
+          <p class="footer-copyright">© <script>document.write(new Date().getFullYear())</script> | v1.0</p>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- SCRIPTS -->
+  <script src="js/monsieurnerdApp.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/pwa.js"></script>
+</body>
+</html>

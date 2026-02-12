@@ -13,6 +13,7 @@ const STATIC_ASSETS = [
   '/settings.html',
   '/history.html',
   '/about.html',
+  '/privacy.html',
   '/css/monsieurnerd-design-system.css',
   '/css/monsieurnerd-components.css',
   '/css/monsieurnerd-app.css',
