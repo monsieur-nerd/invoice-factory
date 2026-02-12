@@ -1,4 +1,4 @@
-# 🧵 Générateur de Factures Pédagogiques v1.0
+# 🧵 Invoice Factory
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![Live Demo](https://img.shields.io/badge/Demo-Live-success)](https://monsieur-nerd.github.io/generateur-factures-pedagogiques/)
