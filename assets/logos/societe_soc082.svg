@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><rect width="200" height="200" fill="#B03A2E" rx="20"/><path d="M65 40 Q65 110 100 110 Q135 110 135 40 Z" fill="white"/><line x1="100" y1="35" x2="100" y2="110" stroke="#E74C3C" stroke-width="4"/><text x="100" y="156" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white">Brasserie</text><text x="100" y="174" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white">Centrale</text>
+    <!-- Couverts -->
+    <line x1="55" y1="50" x2="55" y2="85" stroke="white" stroke-width="4" stroke-linecap="round"/>
+    <line x1="48" y1="50" x2="48" y2="70" stroke="white" stroke-width="3" stroke-linecap="round"/>
+    <line x1="62" y1="50" x2="62" y2="70" stroke="white" stroke-width="3" stroke-linecap="round"/>
+    <!-- Fourchette -->
+    <line x1="80" y1="85" x2="80" y2="50" stroke="white" stroke-width="4" stroke-linecap="round"/>
+    <line x1="73" y1="50" x2="73" y2="65" stroke="white" stroke-width="2" stroke-linecap="round"/>
+    <line x1="80" y1="50" x2="80" y2="65" stroke="white" stroke-width="2" stroke-linecap="round"/>
+    <line x1="87" y1="50" x2="87" y2="65" stroke="white" stroke-width="2" stroke-linecap="round"/>
+    <!-- Assiette -->
+    <ellipse cx="145" cy="70" rx="25" ry="12" fill="none" stroke="white" stroke-width="3"/>
+    <ellipse cx="145" cy="70" rx="15" ry="7" fill="none" stroke="white" stroke-width="2"/>
+</svg>

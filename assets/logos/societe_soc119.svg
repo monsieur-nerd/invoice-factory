@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+<rect width="200" height="200" fill="#FFEB3B" rx="20"/>
+<circle cx="100" cy="80" r="50" fill="white"/>
+<text x="100" y="95" text-anchor="middle" font-family="Arial, sans-serif" font-size="36" font-weight="bold" fill="#FFEB3B">CI</text>
+<text x="100" y="160" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="white">Crèche Inter Pa</text>
+</svg>

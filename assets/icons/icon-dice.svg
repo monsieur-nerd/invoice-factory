@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" shape-rendering="crispEdges">
+  <!-- Dé aléatoire 8-bit -->
+  <rect x="4" y="6" width="16" height="14" fill="#ECF0F1"/>
+  <rect x="4" y="6" width="16" height="2" fill="#BDC3C7"/>
+  <rect x="4" y="18" width="16" height="2" fill="#95A5A6"/>
+  <rect x="4" y="6" width="2" height="14" fill="#BDC3C7"/>
+  <rect x="18" y="6" width="2" height="14" fill="#95A5A6"/>
+  <!-- Points du dé -->
+  <rect x="8" y="10" width="2" height="2" fill="#E74C3C"/>
+  <rect x="14" y="14" width="2" height="2" fill="#E74C3C"/>
+  <rect x="11" y="12" width="2" height="2" fill="#E74C3C"/>
+</svg>

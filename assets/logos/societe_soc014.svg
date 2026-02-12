@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><rect width="200" height="200" fill="#A0522D" rx="20"/><circle cx="100" cy="60" r="30" fill="white"/><rect x="75" y="85" width="50" height="35" rx="4" fill="white"/><circle cx="100" cy="55" r="12" fill="#A0522D"/><rect x="87" y="95" width="26" height="20" fill="#A0522D"/><text x="100" y="156" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white">Ébénister.</text><text x="100" y="174" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white">Art</text>
+    <!-- Scie -->
+    <path d="M 45 50 L 45 85 L 75 85 L 75 75 L 50 75 L 50 50 Z" fill="white"/>
+    <line x1="48" y1="78" x2="72" y2="78" stroke="#C0392B" stroke-width="1"/>
+    <line x1="48" y1="81" x2="72" y2="81" stroke="#C0392B" stroke-width="1"/>
+    <!-- Marteau -->
+    <rect x="130" y="55" width="8" height="30" fill="white"/>
+    <rect x="125" y="50" width="30" height="12" rx="2" fill="white"/>
+    <rect x="142" y="52" width="10" height="8" fill="#C0392B"/>
+</svg>

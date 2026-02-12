@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="22" height="16" viewBox="0 0 22 16" shape-rendering="crispEdges">
+  <!-- Drapeau France 8-bit -->
+  <rect x="0" y="0" width="7" height="16" fill="#000091"/>
+  <rect x="7" y="0" width="8" height="16" fill="#FFFFFF"/>
+  <rect x="15" y="0" width="7" height="16" fill="#e1000f"/>
+</svg>

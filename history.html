@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+<head>
+  <!-- Theme initialization - must be first to prevent flash -->
+  <script>
+    (function() {
+      const savedTheme = localStorage.getItem('monsieurnerd-theme');
+      
+      // Fonction pour obtenir le thème effectif
+      function getEffectiveTheme(preference) {
+        if (preference === 'auto' || !preference) {
+          return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        return preference;
+      }
+      
+      // Appliquer le thème immédiatement
+      const effectiveTheme = getEffectiveTheme(savedTheme);
+      document.documentElement.setAttribute('data-theme', effectiveTheme);
+    })();
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Historique - Invoice Factory</title>
+  <meta name="description" content="Historique des factures générées">
+  
+  <link rel="icon" href="assets/logo-invoice-factory-32.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="assets/logo-invoice-factory.svg">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#15803D">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="css/monsieurnerd-design-system.css?v=7">
+  <link rel="stylesheet" href="css/monsieurnerd-components.css?v=7">
+  <link rel="stylesheet" href="css/monsieurnerd-app.css?v=7">
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+  <div class="app-root">
+    <!-- HEADER -->
+    <header class="app-header">
+      <div class="app-container">
+        <div class="header-inner">
+          <a href="index.html" class="header-logo">
+            <img src="assets/logo-invoice-factory.svg" alt="Invoice Factory">
+            <span class="header-logo-text">Invoice Factory</span>
+          </a>
+          
+          <nav class="header-nav">
+            <a href="index.html" class="nav-link">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
+              <span data-i18n="navCreate">Créer</span>
+            </a>
+            <a href="history.html" class="nav-link active">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>
+              <span data-i18n="navHistory">Historique</span>
+            </a>
+            <a href="settings.html" class="nav-link">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 0 1 1.37.49l1.296 2.247a1.125 1.125 0 0 1-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 0 1 0 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 0 1-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 0 1-.22.128c-.331.183-.581.495-.644.869l-.212 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 0 1-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 0 1-1.369-.49l-1.297-2.247a1.125 1.125 0 0 1 .26-1.431l1.004-.827c.292-.24.437-.613.43-.992a6.932 6.932 0 0 1 0-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 0 1-.26-1.43l1.297-2.247a1.125 1.125 0 0 1 1.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.281Z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" /></svg>
+              <span data-i18n="navSettings">Paramètres</span>
+            </a>
+            <a href="about.html" class="nav-link">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" /></svg>
+              <span data-i18n="navAbout">À propos</span>
+            </a>
+          </nav>
+          
+          <div class="header-actions">
+            <button class="theme-toggle" data-action="toggle-theme" data-i18n-aria-label="themeToggle" aria-label="Changer de thème">
+              <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z" /></svg>
+              <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z" /></svg>
+            </button>
+            
+            <div class="dropdown lang-selector">
+              <button class="lang-selector-btn" data-dropdown-toggle="lang-menu" aria-expanded="false">
+                <img src="assets/icons/flag-fr.svg" alt="" class="lang-flag" id="current-lang-flag">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="width:1rem;height:1rem;"><path stroke-linecap="round" stroke-linejoin="round" d="m19 9-7 7-7-7" /></svg>
+              </button>
+              <div class="dropdown-menu" id="lang-menu">
+                <div class="dropdown-item" data-action="set-lang" data-lang="fr">
+                  <img src="assets/icons/flag-fr.svg" alt="" class="lang-flag">
+                  <span data-i18n="langFr">Français</span>
+                </div>
+                <div class="dropdown-item" data-action="set-lang" data-lang="nl">
+                  <img src="assets/icons/flag-nl.svg" alt="" class="lang-flag">
+                  <span data-i18n="langNl">Nederlands</span>
+                </div>
+                <div class="dropdown-item" data-action="set-lang" data-lang="de">
+                  <img src="assets/icons/flag-de.svg" alt="" class="lang-flag">
+                  <span data-i18n="langDe">Deutsch</span>
+                </div>
+                <div class="dropdown-item" data-action="set-lang" data-lang="en">
+                  <img src="assets/icons/flag-en.svg" alt="" class="lang-flag">
+                  <span data-i18n="langEn">English</span>
+                </div>
+              </div>
+            </div>
+            
+            <button class="mobile-menu-toggle" data-action="toggle-mobile-menu" aria-label="Menu" aria-expanded="false">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" /></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+    
+    <div class="mobile-menu" id="mobile-menu">
+      <nav class="mobile-nav">
+        <a href="index.html" class="nav-link" data-i18n="navCreate">Créer</a>
+        <a href="history.html" class="nav-link active" data-i18n="navHistory">Historique</a>
+        <a href="settings.html" class="nav-link" data-i18n="navSettings">Paramètres</a>
+        <a href="about.html" class="nav-link" data-i18n="navAbout">À propos</a>
+      </nav>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <main class="app-main">
+      <!-- PAGE HEADER -->
+      <div class="page-header">
+        <div class="app-container">
+          <div class="page-header-inner">
+            <div>
+              <h1 class="page-title" data-i18n="historyTitle">Historique</h1>
+              <p class="page-description" data-i18n="historyDesc">Consultez et retéléchargez vos factures précédemment générées.</p>
+            </div>
+            <button class="btn btn-danger" onclick="app.clearHistory()" data-i18n="historyClearAll">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width:1rem;height:1rem;"><path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" /></svg>
+              Tout effacer
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- HISTORY LIST -->
+      <div class="app-container">
+        <div id="history-container">
+          <!-- Empty state shown by default -->
+          <div class="empty-state" id="empty-history">
+            <div class="empty-state-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" /></svg>
+            </div>
+            <h3 class="empty-state-title" data-i18n="historyEmptyTitle">Aucune facture dans l'historique</h3>
+            <p class="empty-state-description" data-i18n="historyEmptyDesc">Les factures que vous générez apparaîtront ici pour un accès rapide ultérieur.</p>
+            <a href="index.html" class="btn btn-primary" style="margin-top: var(--space-4);" data-i18n="historyCreateBtn">Créer une facture</a>
+          </div>
+          
+          <!-- History list populated by JS -->
+          <div class="history-list" id="history-list" style="display: none;"></div>
+        </div>
+      </div>
+      
+      <!-- Modal pour visualiser la facture -->
+      <div id="invoice-modal" class="invoice-modal" style="display: none;">
+        <div class="invoice-modal-overlay" onclick="app.closeInvoiceModal()"></div>
+        <div class="invoice-modal-content">
+          <div class="invoice-modal-header">
+            <h3 data-i18n="historyModalTitle">Aperçu de la facture</h3>
+            <button class="btn btn-ghost" onclick="app.closeInvoiceModal()">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width:1.5rem;height:1.5rem;">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+          <div class="invoice-modal-body" id="invoice-modal-body">
+            <!-- La facture sera injectée ici -->
+          </div>
+          <div class="invoice-modal-footer">
+            <button class="btn btn-secondary" onclick="app.downloadCurrentInvoice()">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width:1rem;height:1rem;">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+              </svg>
+              Télécharger PDF
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Modal Édition de Facture -->
+      <div id="modal-edit-invoice" class="config-modal" style="display: none;">
+        <div class="config-modal-overlay" onclick="app.closeEditModal()"></div>
+        <div class="config-modal-content" style="max-width: 900px; max-height: 90vh; overflow-y: auto;">
+          <div class="config-modal-header" style="background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%); border-bottom-color: #93C5FD;">
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <div style="background: #3B82F6; color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="width: 20px; height: 20px;">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+                </svg>
+              </div>
+              <h3 style="color: #1E40AF; margin: 0;" data-i18n="editInvoiceTitle">Modifier la facture</h3>
+            </div>
+            <button class="btn btn-ghost" onclick="app.closeEditModal()">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width:1.5rem;height:1.5rem;"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+            </button>
+          </div>
+          <div class="config-modal-body" id="edit-invoice-content">
+            <!-- Nom de l'archive -->
+            <div class="form-group" style="background: #FEF3C7; padding: 16px; border-radius: 8px; border-left: 4px solid #F59E0B; margin-bottom: 24px;">
+              <label class="form-label" style="color: #92400E; font-weight: 600;" data-i18n="archiveName">Nom de l'archive</label>
+              <input type="text" id="edit-archive-name" class="form-input" data-i18n-placeholder="placeholderArchiveName" placeholder="Ex: Facture exercice mars 2025">
+              <p class="form-hint" style="color: #A16207; margin-top: 8px;" data-i18n="archiveNameHint">Donnez un nom personnalisé pour retrouver facilement cette facture dans l'historique</p>
+            </div>
+            
+            <!-- Émetteur -->
+            <div style="margin-bottom: 24px;">
+              <h4 style="color: #1E40AF; font-weight: 600; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 2px solid #DBEAFE;" data-i18n="emitterSection">ÉMETTEUR</h4>
+              <div class="form-row">
+                <div class="form-group" style="flex: 2;">
+                  <label class="form-label" data-i18n="companyName">Nom</label>
+                  <input type="text" id="edit-company-name" class="form-input">
+                </div>
+                <div class="form-group" style="flex: 1;">
+                  <label class="form-label" data-i18n="companyVat">TVA</label>
+                  <input type="text" id="edit-company-vat" class="form-input">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label" data-i18n="companyAddress">Adresse</label>
+                <input type="text" id="edit-company-address" class="form-input">
+              </div>
+            </div>
+            
+            <!-- Client -->
+            <div style="margin-bottom: 24px;">
+              <h4 style="color: #1E40AF; font-weight: 600; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 2px solid #DBEAFE;" data-i18n="clientSection">CLIENT</h4>
+              <div class="form-row">
+                <div class="form-group" style="flex: 2;">
+                  <label class="form-label" data-i18n="clientName">Nom</label>
+                  <input type="text" id="edit-client-name" class="form-input">
+                </div>
+                <div class="form-group" style="flex: 1;">
+                  <label class="form-label" data-i18n="clientVat">TVA</label>
+                  <input type="text" id="edit-client-vat" class="form-input">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label" data-i18n="clientAddress">Adresse</label>
+                <input type="text" id="edit-client-address" class="form-input">
+              </div>
+            </div>
+            
+            <!-- Dates -->
+            <div style="margin-bottom: 24px;">
+              <h4 style="color: #1E40AF; font-weight: 600; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 2px solid #DBEAFE;" data-i18n="datesSection">DATES</h4>
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" data-i18n="invoiceNumberLabel">Numéro de facture</label>
+                  <input type="text" id="edit-invoice-number" class="form-input">
+                </div>
+                <div class="form-group">
+                  <label class="form-label" data-i18n="invoiceDateLabel">Date de facturation</label>
+                  <input type="text" id="edit-invoice-date" class="form-input">
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" data-i18n="operationDateLabel">Date opération</label>
+                  <input type="text" id="edit-operation-date" class="form-input">
+                </div>
+                <div class="form-group">
+                  <label class="form-label" data-i18n="dueDateLabel">Date d'échéance</label>
+                  <input type="text" id="edit-due-date" class="form-input">
+                </div>
+              </div>
+            </div>
+            
+            <!-- Lignes de facture -->
+            <div style="margin-bottom: 24px;">
+              <div style="margin-bottom: 16px;">
+                <h4 style="color: #1E40AF; font-weight: 600; padding-bottom: 8px; border-bottom: 2px solid #DBEAFE;" data-i18n="invoiceLines">LIGNES DE FACTURE</h4>
+              </div>
+              <div id="edit-lines-container"></div>
+              <div style="margin-top: 16px;">
+                <button type="button" class="btn btn-secondary btn-sm" onclick="app.addEditLine()">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width:1rem;height:1rem;"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
+                  <span data-i18n="addLine">Ajouter une ligne</span>
+                </button>
+              </div>
+            </div>
+            
+            <!-- Totaux -->
+            <div style="background: #F0FDF4; padding: 20px; border-radius: 8px; border: 1px solid #BBF7D0;">
+              <h4 style="color: #166534; font-weight: 600; margin-bottom: 16px;" data-i18n="totalsSection">TOTAUX</h4>
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" style="color: #166534;" data-i18n="subtotalLabel">Sous-total HT</label>
+                  <input type="number" id="edit-subtotal" class="form-input" step="0.01" readonly style="background: #F0FDF4; font-weight: 600;">
+                </div>
+                <div class="form-group">
+                  <label class="form-label" style="color: #166534;" data-i18n="vatAmountLabel">Montant TVA</label>
+                  <input type="number" id="edit-vat-amount" class="form-input" step="0.01" readonly style="background: #F0FDF4; font-weight: 600;">
+                </div>
+                <div class="form-group">
+                  <label class="form-label" style="color: #166534;" data-i18n="totalLabel">Total TTC</label>
+                  <input type="number" id="edit-total" class="form-input" step="0.01" readonly style="background: #F0FDF4; font-weight: 600;">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="config-modal-footer" style="background: #EFF6FF;">
+            <button class="btn btn-ghost" onclick="app.closeEditModal()" data-i18n="cancel">Annuler</button>
+            <button class="btn btn-primary" onclick="app.saveInvoiceEditFromHistory()">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width:1rem;height:1rem;"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 3.75V16.5L12 14.25 7.5 16.5V3.75m9 0H18A2.25 2.25 0 0120.25 6v12A2.25 2.25 0 0118 20.25H6A2.25 2.25 0 013.75 18V6A2.25 2.25 0 016 3.75h1.5m9 0h-9" /></svg>
+              <span data-i18n="saveEdit">Sauvegarder les modifications</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal Synthèse des Erreurs -->
+      <div id="modal-error-synthesis" class="config-modal" style="display: none;">
+        <div class="config-modal-overlay" onclick="app.closeErrorSynthesis()"></div>
+        <div class="config-modal-content" style="max-width: 700px;">
+          <div class="config-modal-header" style="background: linear-gradient(135deg, #FEF2F2 0%, #FEE2E2 100%); border-bottom-color: #FECACA;">
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <div style="background: #EF4444; color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="width: 20px; height: 20px;">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+                </svg>
+              </div>
+              <h3 style="color: #991B1B; margin: 0;" data-i18n="errorSynthesisTitle">Synthèse des erreurs</h3>
+            </div>
+            <button class="btn btn-ghost" onclick="app.closeErrorSynthesis()">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width:1.5rem;height:1.5rem;"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+            </button>
+          </div>
+          <div class="config-modal-body" id="error-synthesis-content">
+            <!-- Le contenu sera injecté ici -->
+          </div>
+          <div class="config-modal-footer" style="background: #FEF2F2;">
+            <button class="btn btn-ghost" onclick="app.closeErrorSynthesis()" data-i18n="errorSynthesisClose">Fermer</button>
+            <button class="btn btn-error" onclick="app.printErrorSynthesis()">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width:1rem;height:1rem;">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0110.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0l.229 2.523a1.125 1.125 0 01-1.12 1.227H7.231c-.662 0-1.18-.568-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0021 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 00-3.413-.387m4.5 8.006c-.194.165-.42.295-.673.38A23.978 23.978 0 0112 15.75c-2.648 0-5.195-.429-7.577-1.22a2.016 2.016 0 01-.673-.38m0 0A2.18 2.18 0 013 12.489V8.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 013.413-.387m7.5 0V5.25A2.25 2.25 0 0013.5 3h-3a2.25 2.25 0 00-2.25 2.25v.894m7.5 0a48.667 48.667 0 00-7.5 0M9.75 9.75v4.5m0-4.5h4.5m-4.5 0L12 6m0 0l2.25 3.75" />
+              </svg>
+              <span data-i18n="errorSynthesisPrint">Imprimer la synthèse</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="app-footer">
+      <div class="app-container">
+        <div class="footer-content">
+          <div class="footer-creator">
+            <p class="footer-creator-text"><span data-i18n="footerMadeWith">Conçu avec</span> <span class="footer-creator-heart">❤️</span> <span data-i18n="footerBy">par</span></p>
+            <img src="assets/icons/Logo-Mr-Nerd-black.png" alt="Monsieur Nerd" class="footer-creator-logo">
+          </div>
+          <p class="footer-copyright">© <script>document.write(new Date().getFullYear())</script> | v1.0</p>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- SCRIPTS -->
+  <script src="js/dataLoader.js"></script>
+  <script src="js/invoiceGenerator.js"></script>
+  <script src="js/monsieurnerdApp.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/pwa.js"></script>
+</body>
+</html>

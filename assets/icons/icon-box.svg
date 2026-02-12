@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" shape-rendering="crispEdges">
+  <!-- Boîte/Carton 8-bit -->
+  <rect x="4" y="7" width="16" height="14" fill="#D4A853"/>
+  <rect x="4" y="7" width="16" height="3" fill="#B8954E"/>
+  <!-- Dessus -->
+  <polygon points="4,7 8,3 16,3 20,7" fill="#E5C07B"/>
+  <!-- Ruban -->
+  <rect x="11" y="3" width="2" height="4" fill="#8B4513"/>
+  <rect x="11" y="10" width="2" height="11" fill="#8B4513"/>
+  <!-- Marque -->
+  <rect x="6" y="12" width="3" height="1" fill="#666"/>
+</svg>

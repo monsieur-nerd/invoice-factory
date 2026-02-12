@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><rect width="200" height="200" fill="#9B59B6" rx="20"/><circle cx="100" cy="60" r="30" fill="white"/><rect x="75" y="85" width="50" height="35" rx="4" fill="white"/><circle cx="100" cy="55" r="12" fill="#E91E63"/><rect x="87" y="95" width="26" height="20" fill="#E91E63"/><text x="100" y="156" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white">Salon</text><text x="100" y="174" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white">Élégance</text>
+    <!-- Ciseaux -->
+    <line x1="50" y1="50" x2="70" y2="85" stroke="white" stroke-width="4" stroke-linecap="round"/>
+    <line x1="70" y1="50" x2="50" y2="85" stroke="white" stroke-width="4" stroke-linecap="round"/>
+    <circle cx="60" cy="65" r="4" fill="white"/>
+    <!-- Peigne -->
+    <rect x="125" y="55" width="35" height="12" rx="2" fill="white"/>
+    <line x1="130" y1="67" x2="130" y2="78" stroke="white" stroke-width="2"/>
+    <line x1="136" y1="67" x2="136" y2="78" stroke="white" stroke-width="2"/>
+    <line x1="142" y1="67" x2="142" y2="78" stroke="white" stroke-width="2"/>
+    <line x1="148" y1="67" x2="148" y2="78" stroke="white" stroke-width="2"/>
+    <line x1="154" y1="67" x2="154" y2="78" stroke="white" stroke-width="2"/>
+</svg>

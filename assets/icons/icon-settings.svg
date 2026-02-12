@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" shape-rendering="crispEdges">
+  <!-- Engrenage 8-bit amélioré -->
+  <!-- Dents extérieures -->
+  <rect x="9" y="2" width="6" height="2" fill="#7F8C8D"/>
+  <rect x="7" y="4" width="2" height="2" fill="#7F8C8D"/>
+  <rect x="15" y="4" width="2" height="2" fill="#7F8C8D"/>
+  <rect x="5" y="6" width="2" height="3" fill="#7F8C8D"/>
+  <rect x="17" y="6" width="2" height="3" fill="#7F8C8D"/>
+  <rect x="3" y="8" width="2" height="2" fill="#7F8C8D"/>
+  <rect x="19" y="8" width="2" height="2" fill="#7F8C8D"/>
+  <rect x="2" y="10" width="2" height="4" fill="#7F8C8D"/>
+  <rect x="20" y="10" width="2" height="4" fill="#7F8C8D"/>
+  <rect x="3" y="14" width="2" height="2" fill="#7F8C8D"/>
+  <rect x="19" y="14" width="2" height="2" fill="#7F8C8D"/>
+  <rect x="5" y="15" width="2" height="3" fill="#7F8C8D"/>
+  <rect x="17" y="15" width="2" height="3" fill="#7F8C8D"/>
+  <rect x="7" y="18" width="2" height="2" fill="#7F8C8D"/>
+  <rect x="15" y="18" width="2" height="2" fill="#7F8C8D"/>
+  <rect x="9" y="20" width="6" height="2" fill="#7F8C8D"/>
+  <!-- Corps central -->
+  <rect x="7" y="7" width="10" height="10" fill="#BDC3C7"/>
+  <rect x="8" y="8" width="8" height="8" fill="#ECF0F1"/>
+  <!-- Centre -->
+  <rect x="10" y="10" width="4" height="4" fill="#95A5A6"/>
+  <rect x="11" y="11" width="2" height="2" fill="#7F8C8D"/>
+</svg>

@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!-- Définitions -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#15803D"/>
+      <stop offset="100%" style="stop-color:#166534"/>
+    </linearGradient>
+    <linearGradient id="accentGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#22C55E"/>
+      <stop offset="100%" style="stop-color:#16A34A"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Fond principal avec gradient -->
+  <rect x="4" y="4" width="56" height="56" rx="14" fill="url(#bgGradient)"/>
+  
+  <!-- Ombre subtile -->
+  <rect x="4" y="6" width="56" height="54" rx="14" fill="#14532D" opacity="0.3"/>
+  
+  <!-- Document/Facture stylisé -->
+  <rect x="16" y="12" width="32" height="40" rx="6" fill="#FFFFFF"/>
+  
+  <!-- Coin plié du document -->
+  <path d="M16 46 L24 46 L16 54 Z" fill="#E5E7EB"/>
+  
+  <!-- Lignes de contenu (facture) -->
+  <!-- Ligne titre -->
+  <rect x="22" y="18" width="20" height="3" rx="1.5" fill="#15803D"/>
+  
+  <!-- Lignes de texte -->
+  <rect x="22" y="26" width="16" height="2" rx="1" fill="#6B7280"/>
+  <rect x="22" y="30" width="20" height="2" rx="1" fill="#9CA3AF"/>
+  <rect x="22" y="34" width="14" height="2" rx="1" fill="#9CA3AF"/>
+  
+  <!-- Ligne de séparation -->
+  <rect x="22" y="40" width="20" height="1" rx="0.5" fill="#E5E7EB"/>
+  
+  <!-- Montant total stylisé -->
+  <rect x="22" y="44" width="12" height="4" rx="2" fill="url(#accentGradient)"/>
+  
+  <!-- Cercle décoratif avec symbole € -->
+  <circle cx="46" cy="20" r="8" fill="url(#accentGradient)"/>
+  <text x="46" y="24" font-family="system-ui, sans-serif" font-size="10" font-weight="700" fill="#FFFFFF" text-anchor="middle">€</text>
+  
+  <!-- Petits points décoratifs (modernité) -->
+  <circle cx="14" cy="18" r="2" fill="#4ADE80" opacity="0.6"/>
+  <circle cx="14" cy="24" r="1.5" fill="#22C55E" opacity="0.4"/>
+</svg>

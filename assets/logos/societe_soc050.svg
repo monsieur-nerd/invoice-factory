@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><rect width="200" height="200" fill="#58D68D" rx="20"/><circle cx="100" cy="60" r="30" fill="white"/><rect x="75" y="85" width="50" height="35" rx="4" fill="white"/><circle cx="100" cy="55" r="12" fill="#27AE60"/><rect x="87" y="95" width="26" height="20" fill="#27AE60"/><text x="100" y="156" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white">Vert &amp;</text><text x="100" y="174" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white">Nature</text>
+    <!-- Feuille -->
+    <path d="M 55 85 Q 35 65 55 45 Q 75 65 55 85" fill="white"/>
+    <line x1="55" y1="48" x2="55" y2="80" stroke="#C0392B" stroke-width="1.5"/>
+    <line x1="55" y1="60" x2="48" y2="55" stroke="#C0392B" stroke-width="1"/>
+    <line x1="55" y1="68" x2="62" y2="63" stroke="#C0392B" stroke-width="1"/>
+    <!-- Arrosoir -->
+    <path d="M 130 75 L 130 55 L 150 55 L 150 75 Q 150 85 140 85 Q 130 85 130 75" fill="white"/>
+    <rect x="145" y="50" width="15" height="5" fill="white"/>
+    <!-- Gouttes -->
+    <circle cx="160" cy="60" r="2" fill="white" opacity="0.6"/>
+    <circle cx="165" cy="68" r="2" fill="white" opacity="0.4"/>
+</svg>

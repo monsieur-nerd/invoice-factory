@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><rect width="200" height="200" fill="#B03A2E" rx="20"/><circle cx="100" cy="60" r="30" fill="white"/><rect x="75" y="85" width="50" height="35" rx="4" fill="white"/><circle cx="100" cy="55" r="12" fill="#C0392B"/><rect x="87" y="95" width="26" height="20" fill="#C0392B"/><text x="100" y="156" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white">Moto &amp;</text><text x="100" y="174" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white">Scooter</text>
+    <!-- Roue avant -->
+    <circle cx="55" cy="70" r="22" fill="none" stroke="white" stroke-width="4"/>
+    <circle cx="55" cy="70" r="10" fill="white"/>
+    <line x1="55" y1="48" x2="55" y2="92" stroke="white" stroke-width="3"/>
+    <line x1="33" y1="70" x2="77" y2="70" stroke="white" stroke-width="3"/>
+    <!-- Clé à molette -->
+    <rect x="130" y="55" width="35" height="12" rx="3" fill="white"/>
+    <circle cx="148" cy="61" r="8" fill="#C0392B" stroke="white" stroke-width="2"/>
+    <rect x="158" y="57" width="8" height="8" fill="white"/>
+</svg>

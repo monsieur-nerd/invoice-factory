@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" shape-rendering="crispEdges">
+  <!-- Triangle d'avertissement 8-bit -->
+  <polygon points="12,2 22,20 2,20" fill="#F1C40F"/>
+  <polygon points="12,5 19,18 5,18" fill="#F39C12"/>
+  <!-- Point d'exclamation -->
+  <rect x="11" y="8" width="2" height="6" fill="#333"/>
+  <rect x="11" y="16" width="2" height="2" fill="#333"/>
+</svg>

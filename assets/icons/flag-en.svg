@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="22" height="16" viewBox="0 0 22 16">
+  <!-- Fond bleu -->
+  <rect width="22" height="16" fill="#012169"/>
+  <!-- Croix blanche de Saint Andrew (diagonale) -->
+  <path d="M0,0 L22,16 M22,0 L0,16" stroke="#FFFFFF" stroke-width="3"/>
+  <!-- Croix rouge de Saint Patrick (diagonale fine) -->
+  <path d="M0,0 L22,16 M22,0 L0,16" stroke="#C8102E" stroke-width="1.5"/>
+  <!-- Croix blanche de Saint George (vertical/horizontal) -->
+  <path d="M11,0 L11,16 M0,8 L22,8" stroke="#FFFFFF" stroke-width="5"/>
+  <!-- Croix rouge de Saint George (vertical/horizontal fine) -->
+  <path d="M11,0 L11,16 M0,8 L22,8" stroke="#C8102E" stroke-width="3"/>
+</svg>

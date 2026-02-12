@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" shape-rendering="crispEdges">
+  <!-- Palette de peinture 8-bit -->
+  <ellipse cx="12" cy="12" rx="9" ry="7" fill="#E74C3C"/>
+  <ellipse cx="12" cy="12" rx="7" ry="5" fill="#C0392B"/>
+  <!-- Trous de peinture -->
+  <rect x="8" y="9" width="2" height="2" fill="#3498DB"/>
+  <rect x="14" y="9" width="2" height="2" fill="#27AE60"/>
+  <rect x="11" y="13" width="2" height="2" fill="#F1C40F"/>
+  <rect x="6" y="12" width="2" height="2" fill="#9B59B6"/>
+  <!-- Pouce -->
+  <rect x="19" y="10" width="3" height="4" fill="#E74C3C"/>
+</svg>

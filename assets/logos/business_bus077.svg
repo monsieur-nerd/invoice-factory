@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+<rect width="200" height="200" fill="#7F8C8D" rx="20"/>
+<circle cx="100" cy="80" r="45" fill="white"/>
+<text x="100" y="90" text-anchor="middle" font-family="Arial, sans-serif" font-size="32" font-weight="bold" fill="#7F8C8D">PF</text>
+<text x="100" y="150" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="bold" fill="white">Pompes funèbres Su</text>
+</svg>

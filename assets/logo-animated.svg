@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <style>
+      .pixel { shape-rendering: crispEdges; }
+      .sparkle {
+        animation: sparkle 2s ease-in-out infinite;
+      }
+      .sparkle:nth-child(2) { animation-delay: 0.3s; }
+      .sparkle:nth-child(3) { animation-delay: 0.6s; }
+      
+      @keyframes sparkle {
+        0%, 100% { opacity: 1; transform: scale(1); }
+        50% { opacity: 0.5; transform: scale(0.8); }
+      }
+      
+      .float {
+        animation: float 3s ease-in-out infinite;
+      }
+      
+      @keyframes float {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-2px); }
+      }
+      
+      .glow {
+        animation: glow 2s ease-in-out infinite alternate;
+      }
+      
+      @keyframes glow {
+        from { filter: drop-shadow(0 0 2px #D4A853); }
+        to { filter: drop-shadow(0 0 8px #D4A853) drop-shadow(0 0 12px #FFD700); }
+      }
+    </style>
+  </defs>
+  
+  <!-- Fond avec glow -->
+  <g class="float glow">
+    <rect x="4" y="4" width="56" height="56" rx="8" fill="#D4A853" class="pixel"/>
+    <rect x="6" y="6" width="52" height="52" rx="6" fill="#F5E6C8" class="pixel"/>
+    <rect x="8" y="8" width="48" height="48" rx="4" fill="#FFFFFF" class="pixel"/>
+  </g>
+  
+  <!-- Contenu -->
+  <g class="float">
+    <!-- Lignes facture -->
+    <rect x="14" y="12" width="36" height="5" fill="#2C3E50" class="pixel"/>
+    <rect x="14" y="21" width="28" height="4" fill="#34495E" class="pixel"/>
+    <rect x="14" y="28" width="32" height="4" fill="#34495E" class="pixel"/>
+    <rect x="14" y="35" width="24" height="4" fill="#34495E" class="pixel"/>
+    
+    <!-- Ligne séparation -->
+    <rect x="14" y="44" width="36" height="3" fill="#D4A853" class="pixel"/>
+    
+    <!-- Total -->
+    <rect x="30" y="48" width="20" height="5" fill="#E74C3C" class="pixel"/>
+  </g>
+  
+  <!-- Sparkles animés -->
+  <g class="sparkle">
+    <rect x="46" y="6" width="4" height="4" fill="#FFD700" class="pixel"/>
+    <rect x="42" y="10" width="4" height="4" fill="#FFD700" class="pixel"/>
+    <rect x="50" y="10" width="4" height="4" fill="#FFD700" class="pixel"/>
+    <rect x="46" y="14" width="4" height="4" fill="#FFD700" class="pixel"/>
+    <rect x="46" y="10" width="4" height="4" fill="#FFF8DC" class="pixel"/>
+  </g>
+  
+  <!-- Petit cœur -->
+  <g class="sparkle" style="animation-delay: 0.5s;">
+    <rect x="10" y="50" width="3" height="3" fill="#E74C3C" class="pixel"/>
+    <rect x="16" y="50" width="3" height="3" fill="#E74C3C" class="pixel"/>
+    <rect x="8" y="53" width="3" height="3" fill="#E74C3C" class="pixel"/>
+    <rect x="18" y="53" width="3" height="3" fill="#E74C3C" class="pixel"/>
+    <rect x="10" y="56" width="9" height="3" fill="#E74C3C" class="pixel"/>
+  </g>
+</svg>

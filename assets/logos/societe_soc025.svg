@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><rect width="200" height="200" fill="#E67E22" rx="20"/><path d="M40 115 L100 35 L160 115 Z" fill="white"/><rect x="85" y="80" width="30" height="35" fill="#E67E22"/><rect x="60" y="105" width="20" height="10" fill="#E67E22"/><text x="100" y="156" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white">Bâtisseurs</text><text x="100" y="174" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white">Pro</text>
+    <!-- Grue stylisée -->
+    <line x1="50" y1="85" x2="80" y2="50" stroke="white" stroke-width="4"/>
+    <line x1="80" y1="50" x2="110" y2="85" stroke="white" stroke-width="4"/>
+    <line x1="80" y1="50" x2="80" y2="35" stroke="white" stroke-width="3"/>
+    <line x1="70" y1="40" x2="90" y2="40" stroke="white" stroke-width="2"/>
+    <!-- Briques -->
+    <rect x="125" y="60" width="35" height="10" fill="white"/>
+    <rect x="125" y="72" width="16" height="10" fill="white"/>
+    <rect x="144" y="72" width="16" height="10" fill="white"/>
+</svg>

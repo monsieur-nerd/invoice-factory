@@ -1,0 +1,417 @@
+/**
+ * ═══════════════════════════════════════════════════════════════════════════════
+ * INVOICE LIGHT MODE - Force toutes les factures en mode clair
+ * ═══════════════════════════════════════════════════════════════════════════════
+ * 
+ * Ce fichier force toutes les factures à s'afficher en mode clair,
+ * indépendamment du thème choisi par l'utilisateur.
+ * Utilisé pour garantir que les PDF exportés soient toujours lisibles.
+ */
+
+/* === FACTURES - FORCÉ EN MODE CLAIR ABSOLU === */
+
+.invoice-document,
+.invoice-pro,
+#invoice-preview .invoice-document,
+#invoice-preview .invoice-pro,
+#invoice-modal .invoice-document,
+#invoice-modal .invoice-pro,
+.preview-content .invoice-document,
+.preview-content .invoice-pro,
+.invoice-modal-body .invoice-document,
+.invoice-modal-body .invoice-pro,
+.batch-document .invoice-document,
+.batch-invoice-item .invoice-document {
+  background-color: #ffffff !important;
+  color: #1f2937 !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+  border: 1px solid #e5e7eb !important;
+}
+
+/* === MODE SOMBRE - ANNULATION COMPLÈTE === */
+
+[data-theme="dark"] .invoice-document,
+[data-theme="dark"] .invoice-pro,
+[data-theme="dark"] #invoice-preview .invoice-document,
+[data-theme="dark"] #invoice-preview .invoice-pro,
+[data-theme="dark"] #invoice-modal .invoice-document,
+[data-theme="dark"] #invoice-modal .invoice-pro,
+[data-theme="dark"] .preview-content .invoice-document,
+[data-theme="dark"] .preview-content .invoice-pro,
+[data-theme="dark"] .invoice-modal-body .invoice-document,
+[data-theme="dark"] .invoice-modal-body .invoice-pro,
+[data-theme="dark"] .batch-document .invoice-document,
+[data-theme="dark"] .batch-invoice-item .invoice-document {
+  background-color: #ffffff !important;
+  color: #1f2937 !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+  border: 1px solid #e5e7eb !important;
+}
+
+/* === TOUS LES ÉLÉMENTS INTERNES === */
+
+.invoice-document *,
+.invoice-pro *,
+#invoice-preview .invoice-document *,
+#invoice-modal .invoice-document *,
+.batch-document .invoice-document *,
+.batch-invoice-item .invoice-document * {
+  color: #1f2937 !important;
+  background-color: transparent !important;
+  border-color: #e5e7eb !important;
+}
+
+[data-theme="dark"] .invoice-document *,
+[data-theme="dark"] .invoice-pro *,
+[data-theme="dark"] #invoice-preview .invoice-document *,
+[data-theme="dark"] #invoice-modal .invoice-document *,
+[data-theme="dark"] .batch-document .invoice-document *,
+[data-theme="dark"] .batch-invoice-item .invoice-document * {
+  color: #1f2937 !important;
+  background-color: transparent !important;
+  border-color: #e5e7eb !important;
+}
+
+/* === TITRES === */
+
+.invoice-document h1,
+.invoice-document h2,
+.invoice-document h3,
+.invoice-document h4,
+.invoice-document h5,
+.invoice-document h6,
+.invoice-pro h1,
+.invoice-pro h2,
+.invoice-pro h3,
+.invoice-pro h4,
+.invoice-pro h5,
+.invoice-pro h6 {
+  color: #1f2937 !important;
+  background-color: transparent !important;
+}
+
+[data-theme="dark"] .invoice-document h1,
+[data-theme="dark"] .invoice-document h2,
+[data-theme="dark"] .invoice-document h3,
+[data-theme="dark"] .invoice-document h4,
+[data-theme="dark"] .invoice-document h5,
+[data-theme="dark"] .invoice-document h6,
+[data-theme="dark"] .invoice-pro h1,
+[data-theme="dark"] .invoice-pro h2,
+[data-theme="dark"] .invoice-pro h3,
+[data-theme="dark"] .invoice-pro h4,
+[data-theme="dark"] .invoice-pro h5,
+[data-theme="dark"] .invoice-pro h6 {
+  color: #1f2937 !important;
+  background-color: transparent !important;
+}
+
+/* === PARAGRAPHES ET SPANS === */
+
+.invoice-document p,
+.invoice-document span,
+.invoice-document div,
+.invoice-document strong,
+.invoice-document b,
+.invoice-document label,
+.invoice-pro p,
+.invoice-pro span,
+.invoice-pro div,
+.invoice-pro strong,
+.invoice-pro b,
+.invoice-pro label {
+  color: #1f2937 !important;
+  background-color: transparent !important;
+}
+
+[data-theme="dark"] .invoice-document p,
+[data-theme="dark"] .invoice-document span,
+[data-theme="dark"] .invoice-document div:not([style*="background"]),
+[data-theme="dark"] .invoice-document strong,
+[data-theme="dark"] .invoice-document b,
+[data-theme="dark"] .invoice-document label,
+[data-theme="dark"] .invoice-pro p,
+[data-theme="dark"] .invoice-pro span,
+[data-theme="dark"] .invoice-pro div:not([style*="background"]),
+[data-theme="dark"] .invoice-pro strong,
+[data-theme="dark"] .invoice-pro b,
+[data-theme="dark"] .invoice-pro label {
+  color: #1f2937 !important;
+  background-color: transparent !important;
+}
+
+/* === TEXTES SECONDAIRES (gris) === */
+
+.invoice-document [style*="color: #6b7280"],
+.invoice-document [style*="color: #9ca3af"],
+.invoice-document [style*="color: var(--color-text-secondary)"],
+.invoice-document [style*="color: var(--color-text-tertiary)"],
+.invoice-pro [style*="color: #6b7280"],
+.invoice-pro [style*="color: #9ca3af"] {
+  color: #6b7280 !important;
+}
+
+[data-theme="dark"] .invoice-document [style*="color: #6b7280"],
+[data-theme="dark"] .invoice-document [style*="color: #9ca3af"],
+[data-theme="dark"] .invoice-pro [style*="color: #6b7280"],
+[data-theme="dark"] .invoice-pro [style*="color: #9ca3af"] {
+  color: #6b7280 !important;
+}
+
+/* === FONDS GRIS CLAIR === */
+
+.invoice-document [style*="background: #f9fafb"],
+.invoice-document [style*="background-color: #f9fafb"],
+.invoice-document [style*="background: #f3f4f6"],
+.invoice-document [style*="background-color: #f3f4f6"],
+.invoice-document [style*="background: linear-gradient(135deg, #f9fafb"],
+.invoice-document [style*="background: linear-gradient(135deg, #f3f4f6"],
+.invoice-pro [style*="background: #f9fafb"],
+.invoice-pro [style*="background-color: #f9fafb"],
+.invoice-pro [style*="background: #f3f4f6"],
+.invoice-pro [style*="background-color: #f3f4f6"] {
+  background-color: #f9fafb !important;
+  background: #f9fafb !important;
+}
+
+[data-theme="dark"] .invoice-document [style*="background: #f9fafb"],
+[data-theme="dark"] .invoice-document [style*="background-color: #f9fafb"],
+[data-theme="dark"] .invoice-document [style*="background: #f3f4f6"],
+[data-theme="dark"] .invoice-document [style*="background-color: #f3f4f6"],
+[data-theme="dark"] .invoice-document [style*="background: linear-gradient(135deg, #f9fafb"],
+[data-theme="dark"] .invoice-document [style*="background: linear-gradient(135deg, #f3f4f6"],
+[data-theme="dark"] .invoice-pro [style*="background: #f9fafb"],
+[data-theme="dark"] .invoice-pro [style*="background-color: #f9fafb"],
+[data-theme="dark"] .invoice-pro [style*="background: #f3f4f6"],
+[data-theme="dark"] .invoice-pro [style*="background-color: #f3f4f6"] {
+  background-color: #f9fafb !important;
+  background: #f9fafb !important;
+}
+
+/* === FONDS BLANC === */
+
+.invoice-document [style*="background: white"],
+.invoice-document [style*="background-color: white"],
+.invoice-document [style*="background: #ffffff"],
+.invoice-document [style*="background-color: #ffffff"],
+.invoice-pro [style*="background: white"],
+.invoice-pro [style*="background-color: white"],
+.invoice-pro [style*="background: #ffffff"],
+.invoice-pro [style*="background-color: #ffffff"] {
+  background-color: #ffffff !important;
+  background: #ffffff !important;
+}
+
+[data-theme="dark"] .invoice-document [style*="background: white"],
+[data-theme="dark"] .invoice-document [style*="background-color: white"],
+[data-theme="dark"] .invoice-document [style*="background: #ffffff"],
+[data-theme="dark"] .invoice-document [style*="background-color: #ffffff"],
+[data-theme="dark"] .invoice-pro [style*="background: white"],
+[data-theme="dark"] .invoice-pro [style*="background-color: white"],
+[data-theme="dark"] .invoice-pro [style*="background: #ffffff"],
+[data-theme="dark"] .invoice-pro [style*="background-color: #ffffff"] {
+  background-color: #ffffff !important;
+  background: #ffffff !important;
+}
+
+/* === TABLEAUX === */
+
+.invoice-document table,
+.invoice-pro table {
+  background-color: #ffffff !important;
+  border-color: #e5e7eb !important;
+}
+
+[data-theme="dark"] .invoice-document table,
+[data-theme="dark"] .invoice-pro table {
+  background-color: #ffffff !important;
+  border-color: #e5e7eb !important;
+}
+
+/* En-têtes de tableaux */
+.invoice-document table thead,
+.invoice-document table th,
+.invoice-pro table thead,
+.invoice-pro table th {
+  background-color: #f3f4f6 !important;
+  color: #4b5563 !important;
+  border-bottom-color: #d1d5db !important;
+  font-weight: 600 !important;
+}
+
+[data-theme="dark"] .invoice-document table thead,
+[data-theme="dark"] .invoice-document table th,
+[data-theme="dark"] .invoice-pro table thead,
+[data-theme="dark"] .invoice-pro table th {
+  background-color: #f3f4f6 !important;
+  color: #4b5563 !important;
+  border-bottom-color: #d1d5db !important;
+}
+
+/* Cellules de tableaux */
+.invoice-document table td,
+.invoice-pro table td {
+  background-color: #ffffff !important;
+  color: #1f2937 !important;
+  border-bottom-color: #e5e7eb !important;
+}
+
+[data-theme="dark"] .invoice-document table td,
+[data-theme="dark"] .invoice-pro table td {
+  background-color: #ffffff !important;
+  color: #1f2937 !important;
+  border-bottom-color: #e5e7eb !important;
+}
+
+/* Lignes alternées */
+.invoice-document table tr[style*="background: #fafafa"],
+.invoice-document table tr:nth-child(even),
+.invoice-pro table tr[style*="background: #fafafa"],
+.invoice-pro table tr:nth-child(even) {
+  background-color: #fafafa !important;
+}
+
+[data-theme="dark"] .invoice-document table tr[style*="background: #fafafa"],
+[data-theme="dark"] .invoice-document table tr:nth-child(even),
+[data-theme="dark"] .invoice-pro table tr[style*="background: #fafafa"],
+[data-theme="dark"] .invoice-pro table tr:nth-child(even) {
+  background-color: #fafafa !important;
+}
+
+/* === BORDURES === */
+
+.invoice-document [style*="border-color: #e5e7eb"],
+.invoice-document [style*="border: 1px solid #e5e7eb"],
+.invoice-document [style*="border-bottom: 1px solid #e5e7eb"],
+.invoice-document [style*="border-top: 1px solid #e5e7eb"],
+.invoice-pro [style*="border-color: #e5e7eb"],
+.invoice-pro [style*="border: 1px solid #e5e7eb"] {
+  border-color: #e5e7eb !important;
+}
+
+[data-theme="dark"] .invoice-document [style*="border-color: #e5e7eb"],
+[data-theme="dark"] .invoice-document [style*="border: 1px solid #e5e7eb"],
+[data-theme="dark"] .invoice-document [style*="border-bottom: 1px solid #e5e7eb"],
+[data-theme="dark"] .invoice-document [style*="border-top: 1px solid #e5e7eb"],
+[data-theme="dark"] .invoice-pro [style*="border-color: #e5e7eb"],
+[data-theme="dark"] .invoice-pro [style*="border: 1px solid #e5e7eb"] {
+  border-color: #e5e7eb !important;
+}
+
+.invoice-document [style*="border-color: #d1d5db"],
+.invoice-document [style*="border-bottom: 2px solid #d1d5db"],
+.invoice-pro [style*="border-color: #d1d5db"],
+.invoice-pro [style*="border-bottom: 2px solid #d1d5db"] {
+  border-color: #d1d5db !important;
+}
+
+[data-theme="dark"] .invoice-document [style*="border-color: #d1d5db"],
+[data-theme="dark"] .invoice-document [style*="border-bottom: 2px solid #d1d5db"],
+[data-theme="dark"] .invoice-pro [style*="border-color: #d1d5db"],
+[data-theme="dark"] .invoice-pro [style*="border-bottom: 2px solid #d1d5db"] {
+  border-color: #d1d5db !important;
+}
+
+/* === BADGES ET ALERTES === */
+
+/* Badge d'erreur */
+.invoice-document [style*="background: #FEF2F2"],
+.invoice-document [style*="background-color: #FEF2F2"],
+.invoice-pro [style*="background: #FEF2F2"],
+.invoice-pro [style*="background-color: #FEF2F2"] {
+  background-color: #fef2f2 !important;
+  color: #991b1b !important;
+  border-left-color: #ef4444 !important;
+}
+
+[data-theme="dark"] .invoice-document [style*="background: #FEF2F2"],
+[data-theme="dark"] .invoice-document [style*="background-color: #FEF2F2"],
+[data-theme="dark"] .invoice-pro [style*="background: #FEF2F2"],
+[data-theme="dark"] .invoice-pro [style*="background-color: #FEF2F2"] {
+  background-color: #fef2f2 !important;
+  color: #991b1b !important;
+  border-left-color: #ef4444 !important;
+}
+
+/* === LOTS DE FACTURES === */
+
+.batch-document {
+  background-color: transparent !important;
+}
+
+[data-theme="dark"] .batch-document {
+  background-color: transparent !important;
+}
+
+/* En-tête des items de lot */
+.batch-invoice-item > div:first-child,
+[data-theme="dark"] .batch-invoice-item > div:first-child {
+  background-color: #f3f4f6 !important;
+  border-color: #d1d5db !important;
+  color: #1f2937 !important;
+}
+
+/* Corps des items de lot */
+.batch-invoice-item > div:last-child,
+[data-theme="dark"] .batch-invoice-item > div:last-child {
+  background-color: #ffffff !important;
+  border-color: #e5e7eb !important;
+  color: #1f2937 !important;
+}
+
+/* === MODALE DE FACTURE === */
+
+#invoice-modal .invoice-modal-content,
+[data-theme="dark"] #invoice-modal .invoice-modal-content {
+  background-color: #ffffff !important;
+  color: #1f2937 !important;
+}
+
+#invoice-modal .invoice-modal-header,
+[data-theme="dark"] #invoice-modal .invoice-modal-header {
+  background-color: #f9fafb !important;
+  border-bottom-color: #e5e7eb !important;
+  color: #1f2937 !important;
+}
+
+#invoice-modal .invoice-modal-body,
+[data-theme="dark"] #invoice-modal .invoice-modal-body {
+  background-color: #f3f4f6 !important;
+}
+
+/* === ZONE DE PRÉVISUALISATION === */
+
+.preview-content,
+[data-theme="dark"] .preview-content {
+  background-color: #f3f4f6 !important;
+}
+
+/* === SPANS SPÉCIAUX (TVA, etc.) === */
+
+.invoice-document span[style*="background: #f3f4f6"],
+.invoice-document span[style*="background-color: #f3f4f6"],
+.invoice-pro span[style*="background: #f3f4f6"],
+.invoice-pro span[style*="background-color: #f3f4f6"] {
+  background-color: #f3f4f6 !important;
+  color: #374151 !important;
+}
+
+[data-theme="dark"] .invoice-document span[style*="background: #f3f4f6"],
+[data-theme="dark"] .invoice-document span[style*="background-color: #f3f4f6"],
+[data-theme="dark"] .invoice-pro span[style*="background: #f3f4f6"],
+[data-theme="dark"] .invoice-pro span[style*="background-color: #f3f4f6"] {
+  background-color: #f3f4f6 !important;
+  color: #374151 !important;
+}
+
+/* === LIENS DANS LES FACTURES === */
+
+.invoice-document a,
+.invoice-pro a {
+  color: #2563eb !important;
+}
+
+[data-theme="dark"] .invoice-document a,
+[data-theme="dark"] .invoice-pro a {
+  color: #2563eb !important;
+}

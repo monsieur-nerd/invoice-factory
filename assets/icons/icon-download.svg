@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" shape-rendering="crispEdges">
+  <!-- Téléchargement 8-bit -->
+  <rect x="4" y="17" width="16" height="4" fill="#7F8C8D"/>
+  <rect x="6" y="15" width="12" height="2" fill="#95A5A6"/>
+  <!-- Flèche -->
+  <rect x="11" y="3" width="2" height="10" fill="#3498DB"/>
+  <rect x="9" y="10" width="6" height="2" fill="#3498DB"/>
+  <rect x="7" y="12" width="10" height="2" fill="#3498DB"/>
+  <rect x="8" y="8" width="2" height="2" fill="#2980B9"/>
+  <rect x="14" y="8" width="2" height="2" fill="#2980B9"/>
+</svg>

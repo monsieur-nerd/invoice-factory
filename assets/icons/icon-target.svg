@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" shape-rendering="crispEdges">
+  <!-- Cible 8-bit -->
+  <rect x="11" y="2" width="2" height="3" fill="#E74C3C"/>
+  <rect x="11" y="19" width="2" height="3" fill="#E74C3C"/>
+  <rect x="2" y="11" width="3" height="2" fill="#E74C3C"/>
+  <rect x="19" y="11" width="3" height="2" fill="#E74C3C"/>
+  <rect x="5" y="5" width="14" height="14" fill="none" stroke="#E74C3C" stroke-width="2"/>
+  <rect x="8" y="8" width="8" height="8" fill="none" stroke="#E74C3C" stroke-width="2"/>
+  <rect x="11" y="10" width="2" height="4" fill="#E74C3C"/>
+  <rect x="10" y="11" width="4" height="2" fill="#E74C3C"/>
+</svg>

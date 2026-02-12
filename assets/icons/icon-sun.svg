@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" shape-rendering="crispEdges">
+  <!-- Soleil 8-bit amélioré -->
+  <!-- Rayons -->
+  <rect x="11" y="1" width="2" height="2" fill="#F39C12"/>
+  <rect x="11" y="21" width="2" height="2" fill="#F39C12"/>
+  <rect x="1" y="11" width="2" height="2" fill="#F39C12"/>
+  <rect x="21" y="11" width="2" height="2" fill="#F39C12"/>
+  <rect x="4" y="4" width="2" height="2" fill="#F39C12"/>
+  <rect x="18" y="4" width="2" height="2" fill="#F39C12"/>
+  <rect x="4" y="18" width="2" height="2" fill="#F39C12"/>
+  <rect x="18" y="18" width="2" height="2" fill="#F39C12"/>
+  <!-- Centre -->
+  <rect x="7" y="7" width="10" height="10" fill="#F1C40F"/>
+  <rect x="9" y="9" width="6" height="6" fill="#F39C12"/>
+  <rect x="11" y="11" width="2" height="2" fill="#E67E22"/>
+</svg>

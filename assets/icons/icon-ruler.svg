@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" shape-rendering="crispEdges">
+  <!-- Règle 8-bit -->
+  <rect x="4" y="2" width="18" height="6" transform="rotate(45 13 12)" fill="#F39C12"/>
+  <rect x="4" y="4" width="18" height="2" transform="rotate(45 13 12)" fill="#E67E22"/>
+  <!-- Graduations -->
+  <rect x="6" y="3" width="1" height="2" transform="rotate(45 13 12)" fill="#333"/>
+  <rect x="9" y="3" width="1" height="2" transform="rotate(45 13 12)" fill="#333"/>
+  <rect x="12" y="3" width="1" height="2" transform="rotate(45 13 12)" fill="#333"/>
+  <rect x="15" y="3" width="1" height="2" transform="rotate(45 13 12)" fill="#333"/>
+  <rect x="18" y="3" width="1" height="2" transform="rotate(45 13 12)" fill="#333"/>
+</svg>

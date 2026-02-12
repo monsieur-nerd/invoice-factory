@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" shape-rendering="crispEdges">
+  <!-- Téléphone mobile 8-bit -->
+  <rect x="7" y="2" width="10" height="20" rx="1" fill="#34495E"/>
+  <rect x="8" y="4" width="8" height="14" fill="#3498DB"/>
+  <!-- Écran -->
+  <rect x="9" y="5" width="6" height="12" fill="#85C1E9"/>
+  <!-- Bouton -->
+  <rect x="10" y="19" width="4" height="2" fill="#7F8C8D"/>
+</svg>
