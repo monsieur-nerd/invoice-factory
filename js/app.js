@@ -689,7 +689,10 @@ class App {
     }
     
     // Activer les boutons
-    document.getElementById('btn-edit')?.removeAttribute('disabled');
+    const btnEdit = document.getElementById('btn-edit');
+    console.log('🔧 renderBatch - btn-edit trouvé:', !!btnEdit);
+    btnEdit?.removeAttribute('disabled');
+    console.log('🔧 renderBatch - btn-edit disabled après:', btnEdit?.disabled);
     document.getElementById('btn-json')?.removeAttribute('disabled');
     document.getElementById('btn-pdf')?.removeAttribute('disabled');
     
@@ -1120,9 +1123,11 @@ class App {
   }
 
   editInvoice() {
+    console.log('🔧 editInvoice appelé, currentInvoice:', this.currentInvoice);
+    
     if (!this.currentInvoice) {
       const t = (key) => typeof i18n !== 'undefined' ? i18n.t(key) : key;
-    this.showToast(t('toastNoInvoiceEdit'), 'error');
+      this.showToast(t('toastNoInvoiceEdit'), 'error');
       return;
     }
     
