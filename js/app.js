@@ -1153,6 +1153,7 @@ class App {
     
     // Gérer le sélecteur de factures pour les lots
     const batchSelectorContainer = document.getElementById('edit-batch-invoice-selector');
+    console.log('🔧 openEditModal - batchSelectorContainer:', !!batchSelectorContainer, 'isBatch:', inv.isBatch, 'invoices:', !!inv.invoices);
     if (batchSelectorContainer) {
       if (inv.isBatch && inv.invoices) {
         // C'est un lot, afficher le sélecteur
@@ -1204,7 +1205,15 @@ class App {
   }
   
   loadBatchInvoiceForEdit(index) {
+    if (!this.currentInvoice || !this.currentInvoice.invoices || index < 0 || index >= this.currentInvoice.invoices.length) {
+      console.warn('Index de facture invalide:', index);
+      return;
+    }
     const inv = this.currentInvoice.invoices[index];
+    if (!inv) {
+      console.warn('Facture non trouvée à l\'index:', index);
+      return;
+    }
     this.loadInvoiceDataForEdit(inv);
     this.renderEditLines();
     this.calculateEditTotals();
@@ -1246,9 +1255,23 @@ class App {
     if (!container || !this.currentInvoice) return;
     
     // Déterminer la facture à éditer (lot ou individuelle)
-    const targetInvoice = (this.editingBatchInvoiceIndex !== null && this.currentInvoice.isBatch)
-      ? this.currentInvoice.invoices[this.editingBatchInvoiceIndex]
-      : this.currentInvoice;
+    let targetInvoice;
+    const batchIndex = this.editingBatchInvoiceIndex;
+    const isValidBatchIndex = batchIndex !== null && batchIndex !== undefined && 
+                              typeof batchIndex === 'number' && batchIndex >= 0 &&
+                              this.currentInvoice.isBatch && this.currentInvoice.invoices &&
+                              batchIndex < this.currentInvoice.invoices.length;
+    
+    if (isValidBatchIndex) {
+      targetInvoice = this.currentInvoice.invoices[batchIndex];
+    } else {
+      targetInvoice = this.currentInvoice;
+    }
+    
+    // Sécurité : si targetInvoice est undefined, utiliser currentInvoice
+    if (!targetInvoice) {
+      targetInvoice = this.currentInvoice;
+    }
     
     const lines = targetInvoice.lines || [];
     
