@@ -762,7 +762,7 @@ class App {
     preview.innerHTML = html;
     
     // Activer les boutons
-    document.getElementById('btn-edit')?.setAttribute('disabled', 'disabled');
+    document.getElementById('btn-edit')?.removeAttribute('disabled');
     document.getElementById('btn-json')?.removeAttribute('disabled');
     document.getElementById('btn-pdf')?.removeAttribute('disabled');
     
@@ -1126,13 +1126,6 @@ class App {
       return;
     }
     
-    // Si c'est un lot, ne pas permettre l'édition
-    if (this.currentInvoice.isBatch) {
-      const t = (key) => typeof i18n !== 'undefined' ? i18n.t(key) : key;
-    this.showToast(t('toastBatchEditError'), 'warning');
-      return;
-    }
-    
     this.openEditModal();
   }
 
@@ -1153,26 +1146,39 @@ class App {
       return;
     }
     
-    // Pré-remplir les champs avec vérification de null
-    const setValue = (id, value) => {
-      const el = document.getElementById(id);
-      if (el) el.value = value ?? '';
-    };
-    
-    setValue('edit-archive-name', inv.archiveName);
-    setValue('edit-company-name', inv.company?.name);
-    setValue('edit-company-vat', inv.company?.vat);
-    setValue('edit-company-address', inv.company?.address);
-    setValue('edit-client-name', inv.client?.name);
-    setValue('edit-client-vat', inv.client?.vat);
-    setValue('edit-client-address', inv.client?.address);
-    setValue('edit-invoice-number', inv.number);
-    setValue('edit-invoice-date', inv.date);
-    setValue('edit-operation-date', inv.operationDate);
-    setValue('edit-due-date', inv.dueDate);
-    setValue('edit-subtotal', inv.subtotal);
-    setValue('edit-vat-amount', inv.vatAmount);
-    setValue('edit-total', inv.total);
+    // Gérer le sélecteur de factures pour les lots
+    const batchSelectorContainer = document.getElementById('edit-batch-invoice-selector');
+    if (batchSelectorContainer) {
+      if (inv.isBatch && inv.invoices) {
+        // C'est un lot, afficher le sélecteur
+        let selectorHtml = `
+          <div class="form-group" style="margin-bottom: 16px;">
+            <label class="form-label">Facture à éditer</label>
+            <select id="edit-batch-invoice-select" class="form-input" onchange="app.selectBatchInvoiceForEdit(this.value)">
+        `;
+        inv.invoices.forEach((subInv, idx) => {
+          selectorHtml += `<option value="${idx}">${subInv.number} - ${subInv.company?.name} → ${subInv.client?.name}</option>`;
+        });
+        selectorHtml += '</select></div>';
+        batchSelectorContainer.innerHTML = selectorHtml;
+        batchSelectorContainer.style.display = 'block';
+        
+        // Initialiser l'index de la facture sélectionnée
+        this.editingBatchInvoiceIndex = 0;
+        this.loadBatchInvoiceForEdit(0);
+      } else {
+        // Ce n'est pas un lot, cacher le sélecteur
+        batchSelectorContainer.innerHTML = '';
+        batchSelectorContainer.style.display = 'none';
+        this.editingBatchInvoiceIndex = null;
+        
+        // Charger les données normalement
+        this.loadInvoiceDataForEdit(inv);
+      }
+    } else {
+      // Pas de conteneur de sélecteur, charger normalement
+      this.loadInvoiceDataForEdit(inv);
+    }
     
     // Rendre les lignes
     this.renderEditLines();
@@ -1187,6 +1193,37 @@ class App {
     console.log('✅ Modal d\'édition ouvert');
   }
   
+  selectBatchInvoiceForEdit(index) {
+    this.editingBatchInvoiceIndex = parseInt(index);
+    const inv = this.currentInvoice.invoices[this.editingBatchInvoiceIndex];
+    this.loadInvoiceDataForEdit(inv);
+    this.renderEditLines();
+    this.calculateEditTotals();
+  }
+  
+  loadInvoiceDataForEdit(inv) {
+    // Pré-remplir les champs avec vérification de null
+    const setValue = (id, value) => {
+      const el = document.getElementById(id);
+      if (el) el.value = value ?? '';
+    };
+    
+    setValue('edit-archive-name', inv.archiveName || this.currentInvoice.archiveName);
+    setValue('edit-company-name', inv.company?.name);
+    setValue('edit-company-vat', inv.company?.vat);
+    setValue('edit-company-address', inv.company?.address);
+    setValue('edit-client-name', inv.client?.name);
+    setValue('edit-client-vat', inv.client?.vat);
+    setValue('edit-client-address', inv.client?.address);
+    setValue('edit-invoice-number', inv.number);
+    setValue('edit-invoice-date', inv.date);
+    setValue('edit-operation-date', inv.operationDate);
+    setValue('edit-due-date', inv.dueDate);
+    setValue('edit-subtotal', inv.subtotal);
+    setValue('edit-vat-amount', inv.vatAmount);
+    setValue('edit-total', inv.total);
+  }
+  
   closeEditModal() {
     const modal = document.getElementById('modal-edit-invoice');
     if (modal) {
@@ -1199,7 +1236,12 @@ class App {
     const container = document.getElementById('edit-lines-container');
     if (!container || !this.currentInvoice) return;
     
-    const lines = this.currentInvoice.lines || [];
+    // Déterminer la facture à éditer (lot ou individuelle)
+    const targetInvoice = (this.editingBatchInvoiceIndex !== null && this.currentInvoice.isBatch)
+      ? this.currentInvoice.invoices[this.editingBatchInvoiceIndex]
+      : this.currentInvoice;
+    
+    const lines = targetInvoice.lines || [];
     
     container.innerHTML = lines.map((line, index) => `
       <div class="edit-line-item" data-line-index="${index}" style="background: #F9FAFB; padding: 16px; border-radius: 8px; margin-bottom: 12px; border: 1px solid #E5E7EB;">
@@ -1295,11 +1337,20 @@ class App {
     if (totalInput) totalInput.value = total.toFixed(2);
   }
   
+  getEditingTargetInvoice() {
+    if (!this.currentInvoice) return null;
+    if (this.editingBatchInvoiceIndex !== null && this.currentInvoice.isBatch) {
+      return this.currentInvoice.invoices[this.editingBatchInvoiceIndex];
+    }
+    return this.currentInvoice;
+  }
+  
   addEditLine() {
-    if (!this.currentInvoice) return;
+    const targetInvoice = this.getEditingTargetInvoice();
+    if (!targetInvoice) return;
     
     const newLine = {
-      id: this.currentInvoice.lines.length + 1,
+      id: targetInvoice.lines.length + 1,
       description: '',
       qty: 1,
       unitPrice: 0,
@@ -1307,17 +1358,18 @@ class App {
       total: 0
     };
     
-    this.currentInvoice.lines.push(newLine);
+    targetInvoice.lines.push(newLine);
     this.renderEditLines();
     this.calculateEditTotals();
   }
   
   removeEditLine(index) {
-    if (!this.currentInvoice || this.currentInvoice.lines.length <= 1) return;
+    const targetInvoice = this.getEditingTargetInvoice();
+    if (!targetInvoice || targetInvoice.lines.length <= 1) return;
     
-    this.currentInvoice.lines.splice(index, 1);
+    targetInvoice.lines.splice(index, 1);
     // Réindexer les lignes
-    this.currentInvoice.lines.forEach((line, i) => line.id = i + 1);
+    targetInvoice.lines.forEach((line, i) => line.id = i + 1);
     this.renderEditLines();
     this.calculateEditTotals();
   }
@@ -1327,45 +1379,49 @@ class App {
     
     const t = (key) => typeof i18n !== 'undefined' ? i18n.t(key) : key;
     
+    // Déterminer la cible de l'édition
+    const targetInvoice = this.getEditingTargetInvoice();
+    if (!targetInvoice) return;
+    
     // Récupérer les valeurs du formulaire
     const archiveName = document.getElementById('edit-archive-name').value.trim();
     
     // Mettre à jour l'entreprise
-    this.currentInvoice.company.name = document.getElementById('edit-company-name').value.trim();
-    this.currentInvoice.company.vat = document.getElementById('edit-company-vat').value.trim();
-    this.currentInvoice.company.address = document.getElementById('edit-company-address').value.trim();
+    targetInvoice.company.name = document.getElementById('edit-company-name').value.trim();
+    targetInvoice.company.vat = document.getElementById('edit-company-vat').value.trim();
+    targetInvoice.company.address = document.getElementById('edit-company-address').value.trim();
     
     // Mettre à jour le client
-    this.currentInvoice.client.name = document.getElementById('edit-client-name').value.trim();
-    this.currentInvoice.client.vat = document.getElementById('edit-client-vat').value.trim();
-    this.currentInvoice.client.address = document.getElementById('edit-client-address').value.trim();
+    targetInvoice.client.name = document.getElementById('edit-client-name').value.trim();
+    targetInvoice.client.vat = document.getElementById('edit-client-vat').value.trim();
+    targetInvoice.client.address = document.getElementById('edit-client-address').value.trim();
     
     // Mettre à jour les dates et numéro
-    this.currentInvoice.number = document.getElementById('edit-invoice-number').value.trim();
-    this.currentInvoice.date = document.getElementById('edit-invoice-date').value.trim();
-    this.currentInvoice.operationDate = document.getElementById('edit-operation-date').value.trim();
-    this.currentInvoice.dueDate = document.getElementById('edit-due-date').value.trim();
+    targetInvoice.number = document.getElementById('edit-invoice-number').value.trim();
+    targetInvoice.date = document.getElementById('edit-invoice-date').value.trim();
+    targetInvoice.operationDate = document.getElementById('edit-operation-date').value.trim();
+    targetInvoice.dueDate = document.getElementById('edit-due-date').value.trim();
     
     // Mettre à jour les lignes
     const lineItems = document.querySelectorAll('.edit-line-item');
     lineItems.forEach((item, index) => {
-      if (this.currentInvoice.lines[index]) {
-        this.currentInvoice.lines[index].description = item.querySelector('.edit-line-desc').value.trim();
-        this.currentInvoice.lines[index].qty = parseInt(item.querySelector('.edit-line-qty').value) || 1;
-        this.currentInvoice.lines[index].unitPrice = parseFloat(item.querySelector('.edit-line-price').value) || 0;
-        this.currentInvoice.lines[index].vatRate = parseInt(item.querySelector('.edit-line-vat').value) || 21;
-        this.currentInvoice.lines[index].total = parseFloat(item.querySelector('.edit-line-total').value) || 0;
+      if (targetInvoice.lines[index]) {
+        targetInvoice.lines[index].description = item.querySelector('.edit-line-desc').value.trim();
+        targetInvoice.lines[index].qty = parseInt(item.querySelector('.edit-line-qty').value) || 1;
+        targetInvoice.lines[index].unitPrice = parseFloat(item.querySelector('.edit-line-price').value) || 0;
+        targetInvoice.lines[index].vatRate = parseInt(item.querySelector('.edit-line-vat').value) || 21;
+        targetInvoice.lines[index].total = parseFloat(item.querySelector('.edit-line-total').value) || 0;
       }
     });
     
     // Mettre à jour les totaux
-    this.currentInvoice.subtotal = parseFloat(document.getElementById('edit-subtotal').value) || 0;
-    this.currentInvoice.vatAmount = parseFloat(document.getElementById('edit-vat-amount').value) || 0;
-    this.currentInvoice.total = parseFloat(document.getElementById('edit-total').value) || 0;
+    targetInvoice.subtotal = parseFloat(document.getElementById('edit-subtotal').value) || 0;
+    targetInvoice.vatAmount = parseFloat(document.getElementById('edit-vat-amount').value) || 0;
+    targetInvoice.total = parseFloat(document.getElementById('edit-total').value) || 0;
     
     // Marquer comme édité et sauvegarder le nom d'archive
-    this.currentInvoice.isEdited = true;
-    this.currentInvoice.editedAt = new Date().toISOString();
+    targetInvoice.isEdited = true;
+    targetInvoice.editedAt = new Date().toISOString();
     if (archiveName) {
       this.currentInvoice.archiveName = archiveName;
     }
@@ -1504,13 +1560,12 @@ class App {
           <button class="btn btn-ghost btn-sm" onclick="app.loadInvoice(${index})" title="${isBatchInvoice ? (t('historyViewBatch') || 'Voir les factures du lot') : (t('historyViewInvoice') || 'Voir la facture')}">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width:1rem;height:1rem;"><path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" /><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" /></svg>
           </button>
-          ${!isBatchInvoice ? `
           <button class="btn btn-secondary btn-sm edit-btn-history" onclick="app.editInvoiceFromHistory(${index})" title="${t('editHistory') || 'Modifier'}" style="display: flex; align-items: center; gap: 4px;">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width:1rem;height:1rem;">
               <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
             </svg>
             <span>${t('editHistory') || 'Modifier'}</span>
-          </button>` : ''}
+          </button>
           ${inv.hasErrors ? `
           <button class="btn btn-error-synthesis btn-sm" onclick="app.showErrorSynthesisFromHistory(${index})" title="${t('btnErrorSynthesis') || 'Synthèse des erreurs'}">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width:1rem;height:1rem;"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" /></svg>
@@ -1543,47 +1598,53 @@ class App {
       return;
     }
     
+    // Déterminer la cible de l'édition (lot ou facture individuelle dans le lot)
+    const isEditingBatchInvoice = this.editingBatchInvoiceIndex !== null && this.currentInvoice.isBatch;
+    const targetInvoice = isEditingBatchInvoice 
+      ? this.currentInvoice.invoices[this.editingBatchInvoiceIndex] 
+      : this.currentInvoice;
+    
     // Récupérer les valeurs du formulaire
     const archiveName = document.getElementById('edit-archive-name')?.value.trim();
     
     // Mettre à jour les infos de l'entreprise
-    if (!this.currentInvoice.company) this.currentInvoice.company = {};
-    this.currentInvoice.company.name = document.getElementById('edit-company-name')?.value || '';
-    this.currentInvoice.company.vat = document.getElementById('edit-company-vat')?.value || '';
-    this.currentInvoice.company.address = document.getElementById('edit-company-address')?.value || '';
+    if (!targetInvoice.company) targetInvoice.company = {};
+    targetInvoice.company.name = document.getElementById('edit-company-name')?.value || '';
+    targetInvoice.company.vat = document.getElementById('edit-company-vat')?.value || '';
+    targetInvoice.company.address = document.getElementById('edit-company-address')?.value || '';
     
     // Mettre à jour les infos du client
-    if (!this.currentInvoice.client) this.currentInvoice.client = {};
-    this.currentInvoice.client.name = document.getElementById('edit-client-name')?.value || '';
-    this.currentInvoice.client.vat = document.getElementById('edit-client-vat')?.value || '';
-    this.currentInvoice.client.address = document.getElementById('edit-client-address')?.value || '';
+    if (!targetInvoice.client) targetInvoice.client = {};
+    targetInvoice.client.name = document.getElementById('edit-client-name')?.value || '';
+    targetInvoice.client.vat = document.getElementById('edit-client-vat')?.value || '';
+    targetInvoice.client.address = document.getElementById('edit-client-address')?.value || '';
     
     // Mettre à jour les dates
-    this.currentInvoice.number = document.getElementById('edit-invoice-number')?.value || '';
-    this.currentInvoice.date = document.getElementById('edit-invoice-date')?.value || '';
-    this.currentInvoice.operationDate = document.getElementById('edit-operation-date')?.value || '';
-    this.currentInvoice.dueDate = document.getElementById('edit-due-date')?.value || '';
+    targetInvoice.number = document.getElementById('edit-invoice-number')?.value || '';
+    targetInvoice.date = document.getElementById('edit-invoice-date')?.value || '';
+    targetInvoice.operationDate = document.getElementById('edit-operation-date')?.value || '';
+    targetInvoice.dueDate = document.getElementById('edit-due-date')?.value || '';
     
     // Mettre à jour les lignes
     const lineItems = document.querySelectorAll('.edit-line-item');
     lineItems.forEach((item, index) => {
-      if (this.currentInvoice.lines[index]) {
-        this.currentInvoice.lines[index].description = item.querySelector('.edit-line-desc')?.value?.trim() || '';
-        this.currentInvoice.lines[index].qty = parseInt(item.querySelector('.edit-line-qty')?.value) || 1;
-        this.currentInvoice.lines[index].unitPrice = parseFloat(item.querySelector('.edit-line-price')?.value) || 0;
-        this.currentInvoice.lines[index].vatRate = parseInt(item.querySelector('.edit-line-vat')?.value) || 21;
-        this.currentInvoice.lines[index].total = parseFloat(item.querySelector('.edit-line-total')?.value) || 0;
+      if (targetInvoice.lines[index]) {
+        targetInvoice.lines[index].description = item.querySelector('.edit-line-desc')?.value?.trim() || '';
+        targetInvoice.lines[index].qty = parseInt(item.querySelector('.edit-line-qty')?.value) || 1;
+        targetInvoice.lines[index].unitPrice = parseFloat(item.querySelector('.edit-line-price')?.value) || 0;
+        targetInvoice.lines[index].vatRate = parseInt(item.querySelector('.edit-line-vat')?.value) || 21;
+        targetInvoice.lines[index].total = parseFloat(item.querySelector('.edit-line-total')?.value) || 0;
       }
     });
     
     // Mettre à jour les totaux
-    this.currentInvoice.subtotal = parseFloat(document.getElementById('edit-subtotal')?.value) || 0;
-    this.currentInvoice.vatAmount = parseFloat(document.getElementById('edit-vat-amount')?.value) || 0;
-    this.currentInvoice.total = parseFloat(document.getElementById('edit-total')?.value) || 0;
+    targetInvoice.subtotal = parseFloat(document.getElementById('edit-subtotal')?.value) || 0;
+    targetInvoice.vatAmount = parseFloat(document.getElementById('edit-vat-amount')?.value) || 0;
+    targetInvoice.total = parseFloat(document.getElementById('edit-total')?.value) || 0;
     
     // Marquer comme édité
-    this.currentInvoice.isEdited = true;
-    this.currentInvoice.editedAt = new Date().toISOString();
+    targetInvoice.isEdited = true;
+    targetInvoice.editedAt = new Date().toISOString();
     if (archiveName) {
       this.currentInvoice.archiveName = archiveName;
     }
