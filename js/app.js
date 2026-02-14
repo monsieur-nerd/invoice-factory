@@ -1768,6 +1768,8 @@ class App {
   }
 
   showBatchModal(batch) {
+    const t = (key) => typeof i18n !== 'undefined' ? i18n.t(key) : key;
+    
     const modal = document.getElementById('invoice-modal');
     const modalBody = document.getElementById('invoice-modal-body');
     
@@ -1778,17 +1780,17 @@ class App {
       <div class="batch-document" style="max-width: 800px; margin: 0 auto;">
         <div style="background: linear-gradient(135deg, #1e3a5f 0%, #2d5a87 100%); color: white; padding: 2rem; border-radius: 12px; margin-bottom: 2rem; text-align: center;">
           <h1 style="margin: 0; font-size: 1.75rem; display: flex; align-items: center; justify-content: center; gap: 1rem;">
-            📦 LOT DE FACTURES
+            📦 ${t('batchNumber').toUpperCase() || 'LOT'} ${t('batchInvoicesLabel').toUpperCase() || 'DE FACTURES'}
           </h1>
-          <p style="margin: 0.5rem 0 0; font-size: 1.25rem; opacity: 0.9;">N° ${batch.batchNumber}</p>
+          <p style="margin: 0.5rem 0 0; font-size: 1.25rem; opacity: 0.9;">${t('invNumber') || 'N°'} ${batch.batchNumber}</p>
           <div style="margin-top: 1rem; display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap;">
             <span style="background: rgba(255,255,255,0.2); padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.9rem;">
-              ${batch.count} factures
+              ${batch.count} ${t('batchInvoicesLabel') || 'factures'}
             </span>
             <span style="background: rgba(255,255,255,0.2); padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.9rem;">
-              Total: ${batch.total.toFixed(2)} €
+              ${t('batchTotalLabel') || 'Total'}: ${batch.total.toFixed(2)} €
             </span>
-            ${batch.hasErrors ? `<span style="background: #ef4444; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.9rem; font-weight: 600;">⚠️ Contient des erreurs</span>` : ''}
+            ${batch.hasErrors ? `<span style="background: #ef4444; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.9rem; font-weight: 600;">⚠️ ${t('batchContainsErrors') || 'Contient des erreurs'}</span>` : ''}
           </div>
         </div>
         
@@ -1801,9 +1803,9 @@ class App {
           <div style="background: #f3f4f6; padding: 1rem; border-bottom: 3px solid #d1d5db; display: flex; justify-content: space-between; align-items: center;">
             <h3 style="margin: 0; color: #1f2937; display: flex; align-items: center; gap: 0.75rem;">
               <span style="background: #4b5563; color: white; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700;">${index + 1}</span>
-              Facture ${inv.number}
+              ${t('typeInvoice') || 'Facture'} ${inv.number}
             </h3>
-            ${inv.hasErrors ? '<span style="background: #fef2f2; color: #dc2626; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600;">⚠️ Erreurs</span>' : ''}
+            ${inv.hasErrors ? `<span style="background: #fef2f2; color: #dc2626; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.8rem; font-weight: 600;">⚠️ ${t('batchErrorsLabel') || 'Erreurs'}</span>` : ''}
           </div>
           <div style="background: white; padding: 1.5rem;">
             ${this.renderMiniInvoiceForModal(inv)}
@@ -1821,6 +1823,8 @@ class App {
   }
 
   renderMiniInvoiceForModal(inv) {
+    const t = (key) => typeof i18n !== 'undefined' ? i18n.t(key) : key;
+    
     return `
       <div style="font-size: 0.9rem;">
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
