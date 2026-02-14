@@ -689,10 +689,7 @@ class App {
     }
     
     // Activer les boutons
-    const btnEdit = document.getElementById('btn-edit');
-    console.log('🔧 renderBatch - btn-edit trouvé:', !!btnEdit);
-    btnEdit?.removeAttribute('disabled');
-    console.log('🔧 renderBatch - btn-edit disabled après:', btnEdit?.disabled);
+    document.getElementById('btn-edit')?.removeAttribute('disabled');
     document.getElementById('btn-json')?.removeAttribute('disabled');
     document.getElementById('btn-pdf')?.removeAttribute('disabled');
     
@@ -1123,8 +1120,6 @@ class App {
   }
 
   editInvoice() {
-    console.log('🔧 editInvoice appelé, currentInvoice:', this.currentInvoice);
-    
     if (!this.currentInvoice) {
       const t = (key) => typeof i18n !== 'undefined' ? i18n.t(key) : key;
       this.showToast(t('toastNoInvoiceEdit'), 'error');
@@ -1152,8 +1147,26 @@ class App {
     }
     
     // Gérer le sélecteur de factures pour les lots
-    const batchSelectorContainer = document.getElementById('edit-batch-invoice-selector');
-    console.log('🔧 openEditModal - batchSelectorContainer:', !!batchSelectorContainer, 'isBatch:', inv.isBatch, 'invoices:', !!inv.invoices);
+    let batchSelectorContainer = document.getElementById('edit-batch-invoice-selector');
+    
+    // Si le conteneur n'existe pas (ancienne version HTML en cache), le créer dynamiquement
+    if (!batchSelectorContainer && inv.isBatch && inv.invoices) {
+      const editInvoiceContent = document.getElementById('edit-invoice-content');
+      if (editInvoiceContent) {
+        batchSelectorContainer = document.createElement('div');
+        batchSelectorContainer.id = 'edit-batch-invoice-selector';
+        batchSelectorContainer.style.marginBottom = '24px';
+        
+        // Insérer après le nom de l'archive (premier enfant)
+        const firstChild = editInvoiceContent.firstElementChild;
+        if (firstChild) {
+          editInvoiceContent.insertBefore(batchSelectorContainer, firstChild.nextSibling);
+        } else {
+          editInvoiceContent.appendChild(batchSelectorContainer);
+        }
+      }
+    }
+    
     if (batchSelectorContainer) {
       if (inv.isBatch && inv.invoices) {
         // C'est un lot, afficher le sélecteur
@@ -1195,8 +1208,6 @@ class App {
     // Afficher le modal
     modal.style.display = 'flex';
     document.body.style.overflow = 'hidden';
-    
-    console.log('✅ Modal d\'édition ouvert');
   }
   
   selectBatchInvoiceForEdit(index) {
