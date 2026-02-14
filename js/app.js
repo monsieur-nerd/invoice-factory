@@ -782,56 +782,13 @@ class App {
   }
   
   renderMiniInvoice(inv) {
-    // Rendu compact d'une facture pour le lot
-    const t = (key) => typeof i18n !== 'undefined' ? i18n.t(key) : key;
-    
-    // Logo de l'entreprise (toujours présent)
-    const logoHtml = inv.company.logo 
-      ? `<img src="${inv.company.logo}" alt="${inv.company.name}" style="width: 64px; height: 64px; border-radius: 8px; object-fit: contain; box-shadow: 0 2px 8px rgba(0,0,0,0.1); background: white; padding: 4px; border: 1px solid #e5e7eb; margin-right: 12px; vertical-align: middle;">`
-      : '';
+    // Utiliser le même format professionnel que renderHTML avec une échelle réduite pour le lot
+    const invoiceLang = inv.invoiceLang || 'fr';
+    const fullHtml = invoiceGenerator.renderHTML(inv, invoiceLang);
     
     return `
-      <div style="font-size: 0.9rem;">
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
-          <div style="display: flex; align-items: flex-start;">
-            ${logoHtml}
-            <div>
-              <p style="margin: 0; color: #6b7280; font-size: 0.8rem;">${t('invEmitter') || 'ÉMETTEUR'}</p>
-              <p style="margin: 0; font-weight: 600;">${inv.company.name}</p>
-              <p style="margin: 0; color: #4b5563;">${inv.company.address}</p>
-            </div>
-          </div>
-          <div>
-            <p style="margin: 0; color: #6b7280; font-size: 0.8rem;">${t('invClient') || 'CLIENT'}</p>
-            <p style="margin: 0; font-weight: 600;">${inv.client.name}</p>
-            <p style="margin: 0; color: #4b5563;">${inv.client.address}</p>
-          </div>
-        </div>
-        <div style="background: #f9fafb; padding: 0.75rem; border-radius: 6px; margin-bottom: 1rem;">
-          <span style="color: #6b7280;">Date:</span> <strong>${inv.date}</strong> | 
-          <span style="color: #6b7280;">${t('invDueDateLabel') || 'Échéance:'}</span> <strong>${inv.dueDate}</strong> |
-          <span style="color: #6b7280;">Total:</span> <strong style="color: #059669;">${inv.total.toFixed(2)} €</strong>
-        </div>
-        <table style="width: 100%; font-size: 0.8rem; border-collapse: collapse;">
-          <thead>
-            <tr style="background: #f3f4f6;">
-              <th style="padding: 0.5rem; text-align: left;">Description</th>
-              <th style="padding: 0.5rem; text-align: center;">Qté</th>
-              <th style="padding: 0.5rem; text-align: right;">Prix</th>
-              <th style="padding: 0.5rem; text-align: right;">Total</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${inv.lines.map(line => `
-              <tr>
-                <td style="padding: 0.5rem; border-bottom: 1px solid #e5e7eb;">${line.description}</td>
-                <td style="padding: 0.5rem; text-align: center; border-bottom: 1px solid #e5e7eb;">${line.qty}</td>
-                <td style="padding: 0.5rem; text-align: right; border-bottom: 1px solid #e5e7eb;">${line.unitPrice.toFixed(2)} €</td>
-                <td style="padding: 0.5rem; text-align: right; border-bottom: 1px solid #e5e7eb; font-weight: 500;">${line.total.toFixed(2)} €</td>
-              </tr>
-            `).join('')}
-          </tbody>
-        </table>
+      <div class="mini-invoice-wrapper" style="transform: scale(0.75); transform-origin: top center; margin-bottom: -150px;">
+        ${fullHtml}
       </div>
     `;
   }
@@ -839,6 +796,185 @@ class App {
   // ============================================
   // EXPORT
   // ============================================
+
+  /**
+   * Génère une page de facture au format standard dans un document jsPDF
+   * @param {jsPDF} doc - Instance jsPDF
+   * @param {Object} inv - Facture à générer
+   * @param {number} pageNum - Numéro de page (pour les lots)
+   * @param {number} totalPages - Nombre total de pages (pour les lots)
+   */
+  async generateInvoicePDFPage(doc, inv, pageNum = null, totalPages = null) {
+    const t = (key) => typeof i18n !== 'undefined' ? i18n.t(key) : key;
+    
+    // === HEADER avec LOGO au-dessus de FACTURE ===
+    // Note: pageNum et totalPages sont ignorés pour garder le même format
+    // que les factures individuelles (pas d'en-tête de lot)
+    let yPos = 20;
+    
+    // Logo en grand (70mm ≈ 200px) au-dessus
+    if (inv.company.logo) {
+      try {
+        const logoDataUrl = await this.svgToPngDataUrl(inv.company.logo);
+        if (logoDataUrl) {
+          doc.addImage(logoDataUrl, 'PNG', 20, yPos, 50, 50);
+          yPos += 70; // Espace standard après le logo
+        }
+      } catch (e) {
+        console.warn('Impossible de charger le logo:', e);
+      }
+    }
+    
+    // Titre FACTURE et numéro
+    doc.setFontSize(11);
+    doc.setTextColor(212, 168, 83); // Couleur dorée #D4A853
+    doc.setFont('helvetica', 'bold');
+    doc.text((t('invTitle') || 'FACTURE').toUpperCase(), 20, yPos);
+    
+    doc.setFontSize(11);
+    doc.setTextColor(107, 114, 128);
+    doc.setFont('helvetica', 'normal');
+    doc.text(`N° ${inv.number}`, 20, yPos + 6);
+    
+    // Dates à droite
+    doc.setFontSize(9);
+    doc.setTextColor(31, 41, 55);
+    doc.setFont('helvetica', 'bold');
+    doc.text((t('invDate') || 'Date facture') + ':', 130, yPos);
+    doc.setFont('helvetica', 'normal');
+    doc.text(`${inv.date}`, 175, yPos);
+    
+    if (inv.operationDate) {
+      doc.setFont('helvetica', 'bold');
+      doc.text((t('invOperationDate') || 'Date opération') + ':', 130, yPos + 5);
+      doc.setFont('helvetica', 'normal');
+      doc.text(`${inv.operationDate}`, 175, yPos + 5);
+    }
+    
+    doc.setFont('helvetica', 'bold');
+    doc.text((t('invDueDateLabel') || 'Échéance:'), 130, yPos + (inv.operationDate ? 10 : 5));
+    doc.setFont('helvetica', 'normal');
+    doc.text(`${inv.dueDate}`, 175, yPos + (inv.operationDate ? 10 : 5));
+    
+    // === Section ÉMETTEUR et CLIENT ===
+    yPos += 20;
+    doc.setFillColor(249, 250, 251);
+    doc.roundedRect(20, yPos, 170, 45, 3, 3, 'F');
+    
+    doc.setFontSize(8);
+    doc.setTextColor(156, 163, 175);
+    doc.setFont('helvetica', 'bold');
+    doc.text((t('invEmitter') || 'ÉMETTEUR').toUpperCase(), 25, yPos + 8);
+    doc.text((t('invClient') || 'CLIENT'), 110, yPos + 8);
+    
+    doc.setFontSize(11);
+    doc.setTextColor(31, 41, 55);
+    doc.setFont('helvetica', 'bold');
+    doc.text(inv.company.name, 25, yPos + 18);
+    doc.text(inv.client.name, 110, yPos + 18);
+    
+    doc.setFontSize(9);
+    doc.setFont('helvetica', 'normal');
+    doc.text(inv.company.address, 25, yPos + 25);
+    doc.text(inv.client.address, 110, yPos + 25);
+    
+    // TVA
+    doc.setFontSize(8);
+    doc.text(`TVA: ${inv.company.vat}`, 25, yPos + 35);
+    if (inv.client.vat) {
+      doc.text(`TVA: ${inv.client.vat}`, 110, yPos + 35);
+    }
+    
+    // === Tableau ===
+    yPos += 55;
+    
+    doc.setFillColor(249, 250, 251);
+    doc.rect(20, yPos - 5, 170, 10, 'F');
+    
+    doc.setFontSize(9);
+    doc.setTextColor(107, 114, 128);
+    doc.setFont('helvetica', 'bold');
+    doc.text('N°', 25, yPos);
+    doc.text('Description', 40, yPos);
+    doc.text('Qté', 95, yPos);
+    doc.text('Prix unit.', 120, yPos);
+    doc.text('TVA', 150, yPos);
+    doc.text('Total', 175, yPos);
+    
+    yPos += 10;
+    inv.lines.forEach((line, index) => {
+      if (index % 2 === 1) {
+        doc.setFillColor(250, 250, 250);
+        doc.rect(20, yPos - 5, 170, 10, 'F');
+      }
+      
+      doc.setFontSize(9);
+      doc.setTextColor(156, 163, 175);
+      doc.setFont('helvetica', 'bold');
+      doc.text(String(line.id), 25, yPos);
+      
+      doc.setTextColor(31, 41, 55);
+      doc.setFont('helvetica', 'normal');
+      doc.text(line.description.substring(0, 25), 40, yPos);
+      
+      doc.setFont('helvetica', 'bold');
+      doc.text(String(line.qty), 100, yPos);
+      
+      doc.setFont('helvetica', 'normal');
+      doc.text(`${line.unitPrice.toFixed(2)} €`, 125, yPos);
+      
+      doc.setFont('helvetica', 'bold');
+      doc.text(`${line.vatRate}%`, 152, yPos);
+      
+      doc.setFont('helvetica', 'bold');
+      doc.text(`${line.total.toFixed(2)} €`, 175, yPos);
+      
+      yPos += 10;
+    });
+    
+    // Totaux avec ventilation TVA par taux
+    yPos += 10;
+    
+    // Calculer la hauteur nécessaire selon le nombre de taux TVA
+    const vatRates = inv.vatBreakdown ? Object.keys(inv.vatBreakdown) : [];
+    const boxHeight = 30 + (vatRates.length * 6);
+    
+    doc.setFillColor(249, 250, 251);
+    doc.roundedRect(110, yPos - 5, 80, boxHeight, 3, 3, 'F');
+    
+    doc.setFontSize(10);
+    doc.setTextColor(107, 114, 128);
+    doc.setFont('helvetica', 'normal');
+    doc.text(t('invSubtotal') || 'Sous-total HT', 115, yPos + 5);
+    doc.text(`${inv.subtotal.toFixed(2)} €`, 185, yPos + 5, { align: 'right' });
+    
+    yPos += 8;
+    
+    // Ventilation TVA par taux
+    if (inv.vatBreakdown) {
+      Object.entries(inv.vatBreakdown).sort((a, b) => a[0] - b[0]).forEach(([rate, data]) => {
+        doc.setFontSize(8);
+        doc.text(`TVA ${rate}% (base ${data.base.toFixed(2)} €)`, 115, yPos + 5);
+        doc.text(`${data.vat.toFixed(2)} €`, 185, yPos + 5, { align: 'right' });
+        yPos += 6;
+      });
+    }
+    
+    yPos += 4;
+    doc.setFontSize(10);
+    doc.text(t('invVatTotal') || 'Total TVA', 115, yPos);
+    doc.text(`${inv.vatAmount.toFixed(2)} €`, 185, yPos, { align: 'right' });
+    
+    yPos += 10;
+    doc.setFontSize(12);
+    doc.setTextColor(31, 41, 55);
+    doc.setFont('helvetica', 'bold');
+    doc.text(t('invGrandTotal') || 'TOTAL TTC', 115, yPos);
+    
+    doc.setFontSize(14);
+    doc.setTextColor(21, 128, 61);
+    doc.text(`${inv.total.toFixed(2)} €`, 185, yPos, { align: 'right' });
+  }
 
   async exportPDF() {
     if (!this.currentInvoice) {
@@ -858,175 +994,10 @@ class App {
     try {
       const { jsPDF } = window.jspdf;
       const doc = new jsPDF();
-      const inv = this.currentInvoice;
       
-      // === HEADER avec LOGO au-dessus de FACTURE (comme l'aperçu HTML) ===
-      let yPos = 20;
+      await this.generateInvoicePDFPage(doc, this.currentInvoice);
       
-      // Logo en grand (70mm ≈ 200px) au-dessus
-      if (inv.company.logo) {
-        try {
-          const logoDataUrl = await this.svgToPngDataUrl(inv.company.logo);
-          if (logoDataUrl) {
-            doc.addImage(logoDataUrl, 'PNG', 20, yPos, 50, 50);
-            yPos += 70;
-          }
-        } catch (e) {
-          console.warn('Impossible de charger le logo:', e);
-        }
-      }
-      
-      // Titre FACTURE et numéro
-      doc.setFontSize(16);
-      doc.setTextColor(21, 128, 61);
-      doc.setFont('helvetica', 'bold');
-      doc.text('FACTURE', 20, yPos);
-      
-      doc.setFontSize(11);
-      doc.setTextColor(107, 114, 128);
-      doc.setFont('helvetica', 'normal');
-      doc.text(`N° ${inv.number}`, 20, yPos + 6);
-      
-      // Dates à droite
-      doc.setFontSize(9);
-      doc.setTextColor(31, 41, 55);
-      doc.setFont('helvetica', 'bold');
-      doc.text((t('invDate') || 'Date facture') + ':', 130, yPos);
-      doc.setFont('helvetica', 'normal');
-      doc.text(`${inv.date}`, 175, yPos);
-      
-      if (inv.operationDate) {
-        doc.setFont('helvetica', 'bold');
-        doc.text((t('invOperationDate') || 'Date opération') + ':', 130, yPos + 5);
-        doc.setFont('helvetica', 'normal');
-        doc.text(`${inv.operationDate}`, 175, yPos + 5);
-      }
-      
-      doc.setFont('helvetica', 'bold');
-      doc.text((t('invDueDateLabel') || 'Échéance:'), 130, yPos + (inv.operationDate ? 10 : 5));
-      doc.setFont('helvetica', 'normal');
-      doc.text(`${inv.dueDate}`, 175, yPos + (inv.operationDate ? 10 : 5));
-      
-      // === Section ÉMETTEUR et CLIENT ===
-      yPos += 20;
-      doc.setFillColor(249, 250, 251);
-      doc.roundedRect(20, yPos, 170, 45, 3, 3, 'F');
-      
-      doc.setFontSize(8);
-      doc.setTextColor(156, 163, 175);
-      doc.setFont('helvetica', 'bold');
-      doc.text((t('invEmitter') || 'ÉMETTEUR').toUpperCase(), 25, yPos + 8);
-      doc.text((t('invClient') || 'CLIENT'), 110, yPos + 8);
-      
-      doc.setFontSize(11);
-      doc.setTextColor(31, 41, 55);
-      doc.setFont('helvetica', 'bold');
-      doc.text(inv.company.name, 25, yPos + 18);
-      doc.text(inv.client.name, 110, yPos + 18);
-      
-      doc.setFontSize(9);
-      doc.setFont('helvetica', 'normal');
-      doc.text(inv.company.address, 25, yPos + 25);
-      doc.text(inv.client.address, 110, yPos + 25);
-      
-      // TVA
-      doc.setFontSize(8);
-      doc.text(`TVA: ${inv.company.vat}`, 25, yPos + 35);
-      if (inv.client.vat) {
-        doc.text(`TVA: ${inv.client.vat}`, 110, yPos + 35);
-      }
-      
-      // === Tableau ===
-      yPos += 55;
-      
-      doc.setFillColor(249, 250, 251);
-      doc.rect(20, yPos - 5, 170, 10, 'F');
-      
-      doc.setFontSize(9);
-      doc.setTextColor(107, 114, 128);
-      doc.setFont('helvetica', 'bold');
-      doc.text('N°', 25, yPos);
-      doc.text('Description', 40, yPos);
-      doc.text('Qté', 95, yPos);
-      doc.text('Prix unit.', 120, yPos);
-      doc.text('TVA', 150, yPos);
-      doc.text('Total', 175, yPos);
-      
-      yPos += 10;
-      inv.lines.forEach((line, index) => {
-        if (index % 2 === 1) {
-          doc.setFillColor(250, 250, 250);
-          doc.rect(20, yPos - 5, 170, 10, 'F');
-        }
-        
-        doc.setFontSize(9);
-        doc.setTextColor(156, 163, 175);
-        doc.setFont('helvetica', 'bold');
-        doc.text(String(line.id), 25, yPos);
-        
-        doc.setTextColor(31, 41, 55);
-        doc.setFont('helvetica', 'normal');
-        doc.text(line.description.substring(0, 25), 40, yPos);
-        
-        doc.setFont('helvetica', 'bold');
-        doc.text(String(line.qty), 100, yPos);
-        
-        doc.setFont('helvetica', 'normal');
-        doc.text(`${line.unitPrice.toFixed(2)} €`, 125, yPos);
-        
-        doc.setFont('helvetica', 'bold');
-        doc.text(`${line.vatRate}%`, 152, yPos);
-        
-        doc.setFont('helvetica', 'bold');
-        doc.text(`${line.total.toFixed(2)} €`, 175, yPos);
-        
-        yPos += 10;
-      });
-      
-      // Totaux avec ventilation TVA par taux
-      yPos += 10;
-      
-      // Calculer la hauteur nécessaire selon le nombre de taux TVA
-      const vatRates = inv.vatBreakdown ? Object.keys(inv.vatBreakdown) : [];
-      const boxHeight = 30 + (vatRates.length * 6);
-      
-      doc.setFillColor(249, 250, 251);
-      doc.roundedRect(110, yPos - 5, 80, boxHeight, 3, 3, 'F');
-      
-      doc.setFontSize(10);
-      doc.setTextColor(107, 114, 128);
-      doc.setFont('helvetica', 'normal');
-      doc.text(t('invSubtotal') || 'Sous-total HT', 115, yPos + 5);
-      doc.text(`${inv.subtotal.toFixed(2)} €`, 185, yPos + 5, { align: 'right' });
-      
-      yPos += 8;
-      
-      // Ventilation TVA par taux
-      if (inv.vatBreakdown) {
-        Object.entries(inv.vatBreakdown).sort((a, b) => a[0] - b[0]).forEach(([rate, data]) => {
-          doc.setFontSize(8);
-          doc.text(`TVA ${rate}% (base ${data.base.toFixed(2)} €)`, 115, yPos + 5);
-          doc.text(`${data.vat.toFixed(2)} €`, 185, yPos + 5, { align: 'right' });
-          yPos += 6;
-        });
-      }
-      
-      yPos += 4;
-      doc.setFontSize(10);
-      doc.text(t('invVatTotal') || 'Total TVA', 115, yPos);
-      doc.text(`${inv.vatAmount.toFixed(2)} €`, 185, yPos, { align: 'right' });
-      
-      yPos += 10;
-      doc.setFontSize(12);
-      doc.setTextColor(31, 41, 55);
-      doc.setFont('helvetica', 'bold');
-      doc.text(t('invGrandTotal') || 'TOTAL TTC', 115, yPos);
-      
-      doc.setFontSize(14);
-      doc.setTextColor(21, 128, 61);
-      doc.text(`${inv.total.toFixed(2)} €`, 185, yPos, { align: 'right' });
-      
-      doc.save(`facture-${inv.number}.pdf`);
+      doc.save(`facture-${this.currentInvoice.number}.pdf`);
       this.showToast(t('toastPDFDownloaded'), 'success');
     } catch (error) {
       this.showToast(t('toastPDFError'), 'error');
@@ -1062,7 +1033,6 @@ class App {
       yPos += 40;
       doc.setFontSize(12);
       doc.setFont('helvetica', 'normal');
-      const t = (key) => typeof i18n !== 'undefined' ? i18n.t(key) : key;
       doc.text(`${t('batchCount') || 'Nombre de factures'}: ${batch.count}`, 105, yPos, { align: 'center' });
       yPos += 10;
       doc.text(`${t('batchDate') || 'Date de génération'}: ${batch.date}`, 105, yPos, { align: 'center' });
@@ -1112,120 +1082,11 @@ class App {
         });
       }
       
-      // Générer chaque facture
+      // Générer chaque facture avec le format standard
       for (let i = 0; i < batch.invoices.length; i++) {
         const inv = batch.invoices[i];
         doc.addPage();
-        yPos = 20;
-        
-        // En-tête avec numéro de facture dans le lot
-        doc.setFillColor(243, 244, 246);
-        doc.rect(0, 0, 210, 30, 'F');
-        
-        doc.setTextColor(75, 85, 99);
-        doc.setFontSize(10);
-        doc.setFont('helvetica', 'bold');
-        doc.text(`FACTURE ${i + 1} / ${batch.count}`, 20, 15);
-        
-        if (inv.hasErrors) {
-          doc.setTextColor(220, 38, 38);
-          doc.text('⚠️ ' + (t('batchContainsErrors') || 'Contient des erreurs').toUpperCase(), 150, 15);
-        }
-        
-        yPos = 40;
-        
-        // Titre et numéro
-        doc.setTextColor(21, 128, 61);
-        doc.setFontSize(16);
-        doc.text('FACTURE', 20, yPos);
-        
-        doc.setFontSize(10);
-        doc.setTextColor(107, 114, 128);
-        doc.text(`N° ${inv.number}`, 20, yPos + 6);
-        
-        // Dates
-        doc.setFontSize(9);
-        doc.setTextColor(31, 41, 55);
-        doc.setFont('helvetica', 'bold');
-        doc.text((t('invDate') || 'Date facture') + ':', 130, yPos);
-        doc.setFont('helvetica', 'normal');
-        doc.text(`${inv.date}`, 175, yPos);
-        doc.setFont('helvetica', 'bold');
-        doc.text((t('invDueDateLabel') || 'Échéance:'), 130, yPos + 6);
-        doc.setFont('helvetica', 'normal');
-        doc.text(`${inv.dueDate}`, 175, yPos + 6);
-        
-        // Émetteur et client
-        yPos += 20;
-        doc.setFillColor(249, 250, 251);
-        doc.roundedRect(20, yPos, 170, 40, 3, 3, 'F');
-        
-        doc.setFontSize(8);
-        doc.setTextColor(156, 163, 175);
-        doc.setFont('helvetica', 'bold');
-        doc.text('ÉMETTEUR', 25, yPos + 7);
-        doc.text((t('invClient') || 'CLIENT'), 110, yPos + 7);
-        
-        doc.setFontSize(10);
-        doc.setTextColor(31, 41, 55);
-        doc.text(inv.company.name, 25, yPos + 15);
-        doc.text(inv.client.name, 110, yPos + 15);
-        
-        doc.setFontSize(8);
-        doc.setFont('helvetica', 'normal');
-        doc.text(inv.company.address, 25, yPos + 22);
-        doc.text(inv.client.address, 110, yPos + 22);
-        doc.text(`TVA: ${inv.company.vat}`, 25, yPos + 30);
-        
-        // Tableau
-        yPos += 50;
-        doc.setFillColor(249, 250, 251);
-        doc.rect(20, yPos - 5, 170, 8, 'F');
-        
-        doc.setFontSize(8);
-        doc.setTextColor(107, 114, 128);
-        doc.setFont('helvetica', 'bold');
-        doc.text('Description', 25, yPos);
-        doc.text('Qté', 90, yPos);
-        doc.text('Prix', 115, yPos);
-        doc.text('TVA', 145, yPos);
-        doc.text('Total', 175, yPos);
-        
-        yPos += 8;
-        inv.lines.forEach((line) => {
-          doc.setFontSize(8);
-          doc.setTextColor(31, 41, 55);
-          doc.setFont('helvetica', 'normal');
-          doc.text(line.description.substring(0, 30), 25, yPos);
-          doc.setFont('helvetica', 'bold');
-          doc.text(String(line.qty), 92, yPos);
-          doc.setFont('helvetica', 'normal');
-          doc.text(`${line.unitPrice.toFixed(2)} €`, 115, yPos);
-          doc.setFont('helvetica', 'bold');
-          doc.text(`${line.vatRate}%`, 147, yPos);
-          doc.text(`${line.total.toFixed(2)} €`, 175, yPos);
-          yPos += 6;
-        });
-        
-        // Totaux
-        yPos += 10;
-        doc.setFillColor(249, 250, 251);
-        doc.roundedRect(120, yPos - 5, 70, 30, 3, 3, 'F');
-        
-        doc.setFontSize(9);
-        doc.setTextColor(107, 114, 128);
-        doc.setFont('helvetica', 'normal');
-        doc.text((t('invSubtotal') || 'Sous-total HT') + ':', 125, yPos + 5);
-        doc.text(`${inv.subtotal.toFixed(2)} €`, 185, yPos + 5, { align: 'right' });
-        
-        doc.text((t('invVatTotal') || 'Total TVA') + ':', 125, yPos + 12);
-        doc.text(`${inv.vatAmount.toFixed(2)} €`, 185, yPos + 12, { align: 'right' });
-        
-        doc.setFontSize(11);
-        doc.setTextColor(21, 128, 61);
-        doc.setFont('helvetica', 'bold');
-        doc.text('TOTAL TTC', 125, yPos + 22);
-        doc.text(`${inv.total.toFixed(2)} €`, 185, yPos + 22, { align: 'right' });
+        await this.generateInvoicePDFPage(doc, inv, i + 1, batch.count);
       }
       
       doc.save(`lot-factures-${batch.batchNumber}.pdf`);
@@ -1823,51 +1684,14 @@ class App {
   }
 
   renderMiniInvoiceForModal(inv) {
-    const t = (key) => typeof i18n !== 'undefined' ? i18n.t(key) : key;
+    // Utiliser le même format professionnel que renderHTML avec une échelle réduite
+    const invoiceLang = inv.invoiceLang || 'fr';
+    const fullHtml = invoiceGenerator.renderHTML(inv, invoiceLang);
     
+    // Retourner le HTML avec une transformation pour le modal (échelle réduite)
     return `
-      <div style="font-size: 0.9rem;">
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem;">
-          <div>
-            <p style="margin: 0; color: #6b7280; font-size: 0.8rem;">${t('invEmitter') || 'ÉMETTEUR'}</p>
-            <p style="margin: 0; font-weight: 600;">${inv.company.name}</p>
-            <p style="margin: 0; color: #4b5563; font-size: 0.85rem;">${inv.company.address}</p>
-            <p style="margin: 0; color: #4b5563; font-size: 0.85rem;">TVA: ${inv.company.vat}</p>
-          </div>
-          <div>
-            <p style="margin: 0; color: #6b7280; font-size: 0.8rem;">${t('invClient') || 'CLIENT'}</p>
-            <p style="margin: 0; font-weight: 600;">${inv.client.name}</p>
-            <p style="margin: 0; color: #4b5563; font-size: 0.85rem;">${inv.client.address}</p>
-            ${inv.client.vat ? `<p style="margin: 0; color: #4b5563; font-size: 0.85rem;">TVA: ${inv.client.vat}</p>` : ''}
-          </div>
-        </div>
-        <div style="background: #f9fafb; padding: 0.75rem; border-radius: 6px; margin-bottom: 1rem; display: flex; gap: 1.5rem; flex-wrap: wrap;">
-          <span><span style="color: #6b7280;">Date:</span> <strong>${inv.date}</strong></span>
-          <span><span style="color: #6b7280;">${t('invDueDateLabel') || 'Échéance:'}</span> <strong>${inv.dueDate}</strong></span>
-          <span><span style="color: #6b7280;">Total:</span> <strong style="color: #059669;">${inv.total.toFixed(2)} €</strong></span>
-        </div>
-        <table style="width: 100%; font-size: 0.8rem; border-collapse: collapse;">
-          <thead>
-            <tr style="background: #f3f4f6;">
-              <th style="padding: 0.5rem; text-align: left;">Description</th>
-              <th style="padding: 0.5rem; text-align: center;">Qté</th>
-              <th style="padding: 0.5rem; text-align: right;">Prix</th>
-              <th style="padding: 0.5rem; text-align: center;">TVA</th>
-              <th style="padding: 0.5rem; text-align: right;">Total</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${inv.lines.map(line => `
-              <tr style="border-bottom: 1px solid #e5e7eb;">
-                <td style="padding: 0.5rem;">${line.description}</td>
-                <td style="padding: 0.5rem; text-align: center;">${line.qty}</td>
-                <td style="padding: 0.5rem; text-align: right;">${line.unitPrice.toFixed(2)} €</td>
-                <td style="padding: 0.5rem; text-align: center;">${line.vatRate}%</td>
-                <td style="padding: 0.5rem; text-align: right; font-weight: 500;">${line.total.toFixed(2)} €</td>
-              </tr>
-            `).join('')}
-          </tbody>
-        </table>
+      <div class="mini-invoice-wrapper" style="transform: scale(0.85); transform-origin: top center; margin-bottom: -100px;">
+        ${fullHtml}
       </div>
     `;
   }
