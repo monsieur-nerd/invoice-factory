@@ -1195,7 +1195,11 @@ class App {
   
   selectBatchInvoiceForEdit(index) {
     this.editingBatchInvoiceIndex = parseInt(index);
-    const inv = this.currentInvoice.invoices[this.editingBatchInvoiceIndex];
+    this.loadBatchInvoiceForEdit(this.editingBatchInvoiceIndex);
+  }
+  
+  loadBatchInvoiceForEdit(index) {
+    const inv = this.currentInvoice.invoices[index];
     this.loadInvoiceDataForEdit(inv);
     this.renderEditLines();
     this.calculateEditTotals();
