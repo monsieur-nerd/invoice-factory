@@ -783,6 +783,8 @@ class App {
   
   renderMiniInvoice(inv) {
     // Rendu compact d'une facture pour le lot
+    const t = (key) => typeof i18n !== 'undefined' ? i18n.t(key) : key;
+    
     // Logo de l'entreprise (toujours présent)
     const logoHtml = inv.company.logo 
       ? `<img src="${inv.company.logo}" alt="${inv.company.name}" style="width: 64px; height: 64px; border-radius: 8px; object-fit: contain; box-shadow: 0 2px 8px rgba(0,0,0,0.1); background: white; padding: 4px; border: 1px solid #e5e7eb; margin-right: 12px; vertical-align: middle;">`
