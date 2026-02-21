@@ -2787,10 +2787,26 @@ function applyTranslations() {
     const key = el.getAttribute('data-i18n');
     const translation = i18n.t(key);
     if (translation !== key) {
-      // Si l'élément contient des enfants (comme des SVG), ne pas remplacer le contenu
-      // mais mettre à jour aria-label si présent
+      // Si l'élément contient des enfants (comme des SVG), ne pas remplacer tout le contenu
+      // mais mettre à jour uniquement le nœud texte
       if (el.children.length > 0) {
-        // L'élément a des enfants, ne mettre à jour que aria-label
+        // L'élément a des enfants (SVG, etc.)
+        // Chercher le premier nœud texte direct et le mettre à jour
+        let textNodeFound = false;
+        for (let i = 0; i < el.childNodes.length; i++) {
+          const node = el.childNodes[i];
+          if (node.nodeType === Node.TEXT_NODE && node.textContent.trim()) {
+            // C'est un nœud texte avec du contenu, on le remplace
+            node.textContent = translation;
+            textNodeFound = true;
+            break;
+          }
+        }
+        // Si aucun nœud texte trouvé, insérer au début
+        if (!textNodeFound) {
+          el.insertBefore(document.createTextNode(translation), el.firstChild);
+        }
+        // Mettre à jour aussi aria-label si présent
         if (el.hasAttribute('aria-label')) {
           el.setAttribute('aria-label', translation);
         }
