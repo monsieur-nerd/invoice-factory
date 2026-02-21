@@ -533,14 +533,14 @@
   flex-direction: column;
   align-items: center;
   gap: var(--space-2);
-  margin-top: var(--space-2);
+  margin-top: var(--space-1);
 }
 
 .footer-creator-text {
   font-size: var(--text-body-sm);
   color: var(--color-text-secondary);
   margin: 0;
-  margin-top: 30px;
+  margin-top: 15px;
 }
 
 .footer-creator-heart {
