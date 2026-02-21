@@ -551,7 +551,7 @@ const translations = {
     // Preview section
     previewTitle: "Aperçu de la facture",
     noInvoiceTitle: "Aucune facture générée",
-    noInvoiceDesc: "Sélectionnez un mode ci-dessus et cliquez sur Générer pour créer une facture.",
+    noInvoiceDesc: "Sélectionnez un mode ci-dessus et cliquez sur « Générer » pour créer une facture.",
     
     // Labels de facture (FR)
     errorBadge: "Cette facture contient des erreurs intentionnelles à détecter",
@@ -1229,7 +1229,7 @@ const translations = {
     // Preview section (NL)
     previewTitle: "Factuurvoorbeeld",
     noInvoiceTitle: "Geen factuur gegenereerd",
-    noInvoiceDesc: "Selecteer een modus hierboven en klik op Genereren om een factuur te maken.",
+    noInvoiceDesc: "Selecteer een modus hierboven en klik op « Genereren » om een factuur te maken.",
     
     // Labels de facture (NL)
     errorBadge: "Deze factuur bevat opzettelijke fouten om te detecteren",
@@ -1913,7 +1913,7 @@ const translations = {
     // Preview section (DE)
     previewTitle: "Rechnungsvorschau",
     noInvoiceTitle: "Keine Rechnung generiert",
-    noInvoiceDesc: "Wählen Sie einen Modus oben und klicken Sie auf Generieren, um eine Rechnung zu erstellen.",
+    noInvoiceDesc: "Wählen Sie einen Modus oben und klicken Sie auf « Generieren », um eine Rechnung zu erstellen.",
     
     // Labels de facture (DE)
     errorBadge: "Diese Rechnung enthält absichtliche Fehler zum Erkennen",
@@ -2586,7 +2586,7 @@ const translations = {
     // Preview section (EN)
     previewTitle: "Invoice Preview",
     noInvoiceTitle: "No invoice generated",
-    noInvoiceDesc: "Select a mode above and click Generate to create an invoice.",
+    noInvoiceDesc: "Select a mode above and click « Generate » to create an invoice.",
     
     // Labels de facture (EN)
     errorBadge: "This invoice contains intentional errors to detect",
