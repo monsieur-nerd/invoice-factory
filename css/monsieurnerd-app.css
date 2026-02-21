@@ -91,7 +91,7 @@
   gap: var(--space-1);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 840px) {
   .header-nav {
     display: none;
   }
@@ -190,7 +190,7 @@
   height: 1.5rem;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 840px) {
   .mobile-menu-toggle {
     display: flex;
   }
@@ -215,7 +215,7 @@
   transform: translateX(0);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 840px) {
   .mobile-menu {
     display: block;
   }
@@ -242,7 +242,7 @@
   background: linear-gradient(180deg, var(--color-bg-primary) 0%, var(--color-bg-secondary) 100%);
 }
 
-@media (max-width: 768px) {
+@media (max-width: 840px) {
   .hero {
     padding: var(--space-10) 0;
   }
@@ -276,7 +276,7 @@
   margin: 0 0 var(--space-4);
 }
 
-@media (min-width: 768px) {
+@media (min-width: 840px) {
   .hero-title {
     font-size: var(--text-display-md);
   }
@@ -618,7 +618,7 @@
 }
 
 /* Responsive - mobile */
-@media (max-width: 768px) {
+@media (max-width: 840px) {
   .pwa-install-btn-footer {
     position: static;
     margin-top: var(--space-4);
@@ -678,7 +678,7 @@
   align-items: start;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 840px) {
   .settings-grid {
     grid-template-columns: 1fr;
   }
@@ -854,7 +854,7 @@
   gap: var(--space-8);
 }
 
-@media (min-width: 768px) {
+@media (min-width: 840px) {
   .about-grid {
     grid-template-columns: repeat(2, 1fr);
   }
